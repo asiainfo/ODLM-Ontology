@@ -1,0 +1,41 @@
+# 应用的启动环境，保持不动即可
+app:
+  environment: development
+# 应用的启动端口，保持不动即可
+server:
+  port: 8000
+  reload: true
+  debug: true
+databases:
+# mysql连接配置，配置内容与你启动mysql时一致
+  mysql:
+    host: localhost
+    port: 3306
+    user: root
+    password: 123456
+    database: test_db
+# neo4j连接配置，配置内容与你启动neo4j时一致
+  neo4j:
+    host: localhost
+    port: 7687
+    user: neo4j
+    password: 123456
+    database: neo4j
+# milvus连接配置，配置内容与你启动milvus时一致
+  milvus:
+    uri: "http://localhost:19530"
+    db_name: "ontology"
+# AI相关配置，按需进行替换，需要开通对应的LLM和Embedding服务
+ai_services:
+  default_llm: openai
+  default_embedding: local
+  llm:
+    openai:
+      name: openai
+      api_key: sk-your-dev-key
+      model: gpt-4o
+  embedding:
+    local:
+      name: sentence-transformers
+      host: http://127.0.0.1:8000
+      model: all-MiniLM-L6-v2

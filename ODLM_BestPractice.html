@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ODLM_BestPractice.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="odlmontology-for-data-lake-management%E6%9E%84%E5%BB%BA%E4%B8%8E%E5%BA%94%E7%94%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5">ODLM（Ontology for Data Lake Management）构建与应用最佳实践</h1>
+<h2 id="%E6%A6%82%E8%A6%81">概要</h2>
+<p>本最佳实践通过构建基于 ODLM 本体的语义数据治理系统，验证本体驱动的数据血缘自动发现与智能分析能力。采用 Neo4j、MySQL、Milvus 三库融合架构，以运营商行业场景为例，实现从本体建模、数据映射到自然语言查询的端到端数据治理流程。通过智能Agent验证系统能够准确理解业务查询意图，自动推导多层级数据血缘关系，并提供可视化的血缘分析结果，为企业级语义数据治理提供可落地的技术方案。</p>
+<hr>
+<h2 id="1-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%8E%E7%89%88%E6%9C%AC">1. 命名空间与版本</h2>
+<ul>
+<li>本体 IRI: <code>http://asiainfo.com/odlm</code></li>
+<li>命名空间（base IRI）: <code>http://asiainfo.com/odlm#</code></li>
+<li>版本: 1.0（与 <code>odlm.ttl</code> 保持一致）</li>
+<li>标准对齐: 复用 DCAT（数据集与服务）、PROV-O（生成、使用、活动）、Dublin Core（通用元数据）</li>
+</ul>
+<p>前缀建议：</p>
+<pre class="hljs"><code><div>@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
+@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+@prefix odlm: &lt;http://asiainfo.com/odlm#&gt; .
+@prefix ex:    &lt;http://asiainfo.com/odlm-instances#&gt; .
+</div></code></pre>
+<hr>
+<h2 id="2-%E6%A6%82%E8%A7%88%E4%B8%8E%E5%AE%9A%E4%BD%8D">2. 概览与定位</h2>
+<p>ODLM 致力于以统一的语义框架描述数据源、表/字段、任务、指标、维度、标准、权限与服务，以及它们之间的依赖与血缘关系。其目标是：</p>
+<ul>
+<li>显式化结构化数据的业务含义与治理元数据，降低跨系统理解与集成成本；</li>
+<li>用属性链与传递性推理表达血缘依赖，支持自动化溯源与影响分析；</li>
+<li>为智能体（Agent）与知识检索提供结构化、可推理的知识基座；</li>
+<li>与现有数据治理体系（DCAT、PROV、Dublin Core）无缝衔接。</li>
+</ul>
+<hr>
+<h2 id="3-%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99">3. 设计原则</h2>
+<ul>
+<li>复用标准：优先复用 DCAT/PROV-O/Dublin Core，以增强互操作性；</li>
+<li>轻量约束：Domain/Range 采用“必要即声明”的策略，避免过度限制；</li>
+<li>明确标识：实体具备稳定、可交流的业务标识（如 <code>tableId</code>/<code>fieldId</code>）；</li>
+<li>枚举外置：更新周期、层级、统计周期等以词表/命名个体表达；</li>
+<li>可推导性：在 Neo4j 中以节点—关系—路径的多跳模式进行链式推导；TTL 中声明的传递/链语义在实现层通过关系与查询模板实现；</li>
+<li>可扩展性：允许场景化扩展（如对象建模 <code>odlm:Object</code> 与 <code>odlm:ObjectField</code>），保持核心架构的简洁性。</li>
+</ul>
+<h3 id="31-neo4j-%E6%A6%82%E5%BF%B5-%E7%B1%BB-%E5%AE%9E%E4%BE%8B%E5%88%86%E5%B1%82%E4%B8%8E%E5%B1%9E%E6%80%A7%E7%BB%A7%E6%89%BF">3.1 Neo4j 概念-类-实例分层与属性继承</h3>
+<ul>
+<li>顶层概念（Concept）：<code>Agent</code>、<code>Activity</code>、<code>Entity</code>、<code>Class</code>。
+<ul>
+<li><code>Agent</code>：代表具有行动能力的实体，如用户、团队、工作空间等。</li>
+<li><code>Activity</code>：系统中被动/主动触发的任务单元，具备输入与输出（均为 <code>Entity</code>）。</li>
+<li><code>Entity</code>：数据系统中的核心要素，承载状态性属性。</li>
+<li><code>Class</code>：Concept 的具体化层，系统创建的所有实例（Instance）均隶属于某个 <code>Class</code>（如 <code>User</code> 为 <code>Agent</code> 概念的一个具体类）。</li>
+</ul>
+</li>
+<li>属性（Property）继承：父级 Concept 定义的属性由其子级 Class 继承；Class 可继续细化自身属性。</li>
+<li>关系（Relationship）类别：
+<ul>
+<li>对象属性（ObjectProperty）：<code>Instance -&gt; Instance</code>，表达实体间语义关系（如 <code>User creates Task</code>）。</li>
+<li>数据属性（DataProperty）：<code>Instance -&gt; Literal</code>，表达并约束实例属性数据类型（如 <code>hasDueDate: xsd:dateTime</code>）。</li>
+</ul>
+</li>
+</ul>
+<p>该分层架构有助于在 Neo4j 中以属性图方式实现 ODLM 设计：概念稳定、类型清晰、实例轻量，便于推理与可视化。</p>
+<h3 id="32-%E4%B8%89%E5%BA%93%E8%9E%8D%E5%90%88%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%81%8C%E8%B4%A3%E8%BE%B9%E7%95%8C">3.2 三库融合架构与职责边界</h3>
+<ul>
+<li>关系型数据库（RDBMS）：存储本体对象映射的具体业务数据与系统运行所需核心业务数据，作为真实数据的最终落地；</li>
+<li>Neo4j 图数据库：存储与管理本体结构（类、属性、关系）及其语义连接，不存放大规模业务事实数据；</li>
+<li>向量数据库（Vector DB）：缓解用户自然语言与本体规范术语间的语义鸿沟，提供相似度检索以定位最相关的概念/实例。</li>
+</ul>
+<p>工作流要点：</p>
+<ul>
+<li>通过本体对象（<code>odlm:Object</code>/<code>odlm:ObjectField</code>）将语义视图映射至物理表/字段；</li>
+<li>在执行数据查询时，由图谱解析映射关系，转向 RDBMS 执行 SQL；</li>
+<li>面向自然语言查询先经向量库进行语义对齐，再返回 Neo4j 精确定位，最后在 RDBMS 中提取事实数据；</li>
+<li>逻辑解耦、专业分工，避免单一数据库承担其不擅长的负载而造成性能瓶颈。</li>
+</ul>
+<hr>
+<h2 id="4-%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">4. 快速开始</h2>
+<p>以下示例采用最小可运行路径演示 ODLM 的实施过程：启动基础环境 → 配置应用 → 初始化图结构/数据库 → 通过 TTL 与 Python API 创建示例数据。示例严格遵循 <code>odlm</code> 已定义的类与属性规范。</p>
+<p>在 <code>docs.zip</code> 压缩包中，包含以下关键内容：</p>
+<ul>
+<li><code>code</code> 文件夹：存放运行测试所需的必要脚本和依赖项</li>
+<li><code>example.ttl</code>：样例数据的 OWL 定义，包括测试表、字段、本体对象和对象属性</li>
+<li><code>ODLM_BestPractice.md</code>：最佳实践文档</li>
+<li><code>ODLM_Vocabulary.md</code>：词汇表文档</li>
+<li><code>odlm.ttl</code>：ODLM的ttl构建文档</li>
+</ul>
+<p><code>code</code> 文件夹下的文件包括：</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_agent.py</code></td>
+<td>测试Agent的代码，可以调用工具进行快速验证</td>
+</tr>
+<tr>
+<td><code>example.py</code></td>
+<td>样例数据导入脚本</td>
+</tr>
+<tr>
+<td><code>graph_init.py</code></td>
+<td>Neo4j初始化脚本</td>
+</tr>
+<tr>
+<td><code>mysql_init.py</code></td>
+<td>MySQL初始化脚本</td>
+</tr>
+<tr>
+<td><code>tools.py</code></td>
+<td>测试Agent所使用的工具定义代码</td>
+</tr>
+<tr>
+<td><code>pyproject.toml</code></td>
+<td>测试Agent所使用的工具定义代码</td>
+</tr>
+<tr>
+<td><code>config.development.example.yaml</code></td>
+<td>配置文件模板</td>
+</tr>
+</tbody>
+</table>
+<p><code>code/core</code> 文件夹中包含测试脚本所依赖的核心代码库，无需额外关注。</p>
+<h3 id="41-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87linux">4.1 环境准备（Linux）</h3>
+<h4 id="docker%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">Docker环境准备</h4>
+<p>配置 Docker 的 APT 仓库，请在终端中执行以下命令：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Add Docker's official GPG key:</span>
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+<span class="hljs-comment"># Add the repository to Apt sources:</span>
+<span class="hljs-built_in">echo</span> \
+  <span class="hljs-string">"deb [arch=<span class="hljs-variable">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  <span class="hljs-variable">$(. /etc/os-release &amp;&amp; echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")</span> stable"</span> | \
+  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt-get update
+</div></code></pre>
+<p>随后执行以下命令：</p>
+<pre class="hljs"><code><div>sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</div></code></pre>
+<p>执行以下命令验证安装是否完成：</p>
+<pre class="hljs"><code><div>docker images
+</div></code></pre>
+<p><img src="./images/docker_images.png" alt="docker images"></p>
+<p>接下来安装 Docker Compose 插件，用于后续一键启动所需服务。在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>sudo apt-get update
+sudo apt-get install docker-compose-plugin
+</div></code></pre>
+<p>执行以下命令验证安装是否成功：</p>
+<pre class="hljs"><code><div>docker compose version
+</div></code></pre>
+<p><img src="./images/docker_compose_version.png" alt="docker compose version"></p>
+<p>接下来，创建一个名为 <code>odlm_test</code> 的项目目录。</p>
+<p><img src="./images/new_odlm_folder.png" alt="New Folder"></p>
+<h4 id="neo4j-%E6%95%B0%E6%8D%AE%E5%BA%93">Neo4j 数据库</h4>
+<p>使用 Docker Compose 启动 Neo4j（示例基于 Neo4j 5.23.0）：</p>
+<p>在刚创建的 <code>odlm_test</code> 文件夹中，创建一个 <code>neo4j</code> 文件夹。</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> odlm_test
+mkdir neo4j
+<span class="hljs-built_in">cd</span> neo4j
+</div></code></pre>
+<p><img src="./images/new_neo4j_folder_lin.png" alt="New Folder"></p>
+<p>在该文件夹内，创建一个 <code>docker-compose.yml</code> 文件：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 如果vim没有安装，则先安装vim</span>
+<span class="hljs-comment"># sudo apt-get update</span>
+<span class="hljs-comment"># sudo apt-get install vim</span>
+vim docker-compose.yml
+</div></code></pre>
+<p>将以下内容复制到文件中：</p>
+<pre class="hljs"><code><div><span class="hljs-attr">services:</span>
+  <span class="hljs-attr">neo4j:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">neo4j:5.23.0</span> <span class="hljs-comment"># 根据需求替换为其他版本的镜像</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">neo4j</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"7474:7474"</span>  <span class="hljs-comment"># Neo4j 浏览器访问端口</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"7687:7687"</span>  <span class="hljs-comment"># Bolt 协议端口</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./data:/data"</span>  <span class="hljs-comment"># 持久化数据卷</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./logs:/logs"</span>  <span class="hljs-comment"># 持久化日志卷</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./import:/import"</span>  <span class="hljs-comment"># 持久化导入数据卷</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./plugins:/plugins"</span>  <span class="hljs-comment"># 持久化插件卷</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./conf:/conf"</span>  <span class="hljs-comment"># 持久化配置卷</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_AUTH=neo4j/123456</span>  <span class="hljs-comment"># 设置默认的用户名和密码</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_apoc_export_file_enabled=true</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_apoc_import_file_enabled=true</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_apoc_import_file_use__neo4j__config=true</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_dbms_security_procedures_unrestricted=apoc.*,genai.*</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">NEO4J_PLUGINS=["apoc",</span> <span class="hljs-string">"n10s"</span><span class="hljs-string">]</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">unless-stopped</span>
+</div></code></pre>
+<p>使用 <code>:wq</code> 命令保存文件并退出。</p>
+<p>执行以下命令启动 Neo4j 服务：</p>
+<pre class="hljs"><code><div>docker compose up -d
+</div></code></pre>
+<p><img src="./images/neo4j_up.png" alt="Neo4j UP"></p>
+<p>启动完成后，在浏览器中访问 http://localhost:7474 即可进入 Neo4j 管理界面。</p>
+<p><img src="./images/neo4j_backend.png" alt="Neo4j Backend"></p>
+<p>若需关闭服务，请返回该文件夹并在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>docker compose down
+</div></code></pre>
+<h4 id="mysql-%E6%95%B0%E6%8D%AE%E5%BA%93">MySQL 数据库</h4>
+<p>使用 Docker Compose 启动 MySQL：</p>
+<p>返回 <code>odlm_test</code> 文件夹，创建一个 <code>mysql</code> 文件夹。</p>
+<pre class="hljs"><code><div>mkdir mysql
+<span class="hljs-built_in">cd</span> mysql
+</div></code></pre>
+<p>与 Neo4j 相同，创建一个 <code>docker-compose.yml</code> 文件并将以下内容复制到文件中：</p>
+<pre class="hljs"><code><div>vim docker-compose.yml
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-attr">services:</span>
+  <span class="hljs-attr">mysql8:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mysql:8.0</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">mysql8</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"3306:3306"</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./data:/var/lib/mysql"</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">MYSQL_ROOT_PASSWORD=123456</span>
+    <span class="hljs-attr">command:</span> <span class="hljs-string">mysqld</span>
+</div></code></pre>
+<p>使用 <code>:wq</code> 命令保存文件并退出。</p>
+<p>同样执行以下命令启动 MySQL 服务：</p>
+<pre class="hljs"><code><div>docker compose up -d
+</div></code></pre>
+<p><img src="./images/mysql_up.png" alt="Mysql UP"></p>
+<p>若需关闭服务，请返回该文件夹并在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>docker compose down
+</div></code></pre>
+<h4 id="milvus%E5%90%91%E9%87%8F%E5%BA%93">Milvus向量库</h4>
+<p>使用Docker Compose启动向量库:</p>
+<p>返回 <code>odlm_test</code> 文件夹，创建一个 <code>milvus</code> 文件夹。</p>
+<pre class="hljs"><code><div>mkdir milvus
+<span class="hljs-built_in">cd</span> milvus
+</div></code></pre>
+<p>与 Neo4j 相同，创建一个 <code>docker-compose.yml</code> 文件并将以下内容复制到文件中：</p>
+<pre class="hljs"><code><div>vim docker-compose.yml
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-attr">services:</span>
+  <span class="hljs-attr">etcd:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-etcd</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">quay.io/coreos/etcd:v3.5.18</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_AUTO_COMPACTION_MODE=revision</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_AUTO_COMPACTION_RETENTION=1000</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_QUOTA_BACKEND_BYTES=4294967296</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">ETCD_SNAPSHOT_COUNT=50000</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./volumes/etcd:/etcd"</span>
+    <span class="hljs-attr">command:</span> <span class="hljs-string">etcd</span> <span class="hljs-string">-advertise-client-urls=http://etcd:2400</span> <span class="hljs-string">-listen-client-urls</span> <span class="hljs-string">http://0.0.0.0:2400</span> <span class="hljs-string">--data-dir</span> <span class="hljs-string">/etcd</span>
+    <span class="hljs-attr">healthcheck:</span>
+      <span class="hljs-attr">test:</span> <span class="hljs-string">["CMD",</span> <span class="hljs-string">"etcdctl"</span><span class="hljs-string">,</span> <span class="hljs-string">"endpoint"</span><span class="hljs-string">,</span> <span class="hljs-string">"health"</span><span class="hljs-string">]</span>
+      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span>
+      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span>
+
+  <span class="hljs-attr">minio:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-minio</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">minio/minio:RELEASE.2024-12-18T13-15-44Z</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">MINIO_ACCESS_KEY:</span> <span class="hljs-string">minioadmin</span>
+      <span class="hljs-attr">MINIO_SECRET_KEY:</span> <span class="hljs-string">minioadmin</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"9001:9001"</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"9000:9000"</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./volumes/minio:/minio_data"</span>
+    <span class="hljs-attr">command:</span> <span class="hljs-string">minio</span> <span class="hljs-string">server</span> <span class="hljs-string">/minio_data</span> <span class="hljs-string">--console-address</span> <span class="hljs-string">":9001"</span>
+    <span class="hljs-attr">healthcheck:</span>
+      <span class="hljs-attr">test:</span> <span class="hljs-string">["CMD",</span> <span class="hljs-string">"curl"</span><span class="hljs-string">,</span> <span class="hljs-string">"-f"</span><span class="hljs-string">,</span> <span class="hljs-string">"http://localhost:9000/minio/health/live"</span><span class="hljs-string">]</span>
+      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span>
+      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span>
+
+  <span class="hljs-attr">standalone:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">milvus-standalone</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">milvusdb/milvus:v2.6.0</span>
+    <span class="hljs-attr">command:</span> <span class="hljs-string">["milvus",</span> <span class="hljs-string">"run"</span><span class="hljs-string">,</span> <span class="hljs-string">"standalone"</span><span class="hljs-string">]</span>
+    <span class="hljs-attr">security_opt:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-string">seccomp:unconfined</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">ETCD_ENDPOINTS:</span> <span class="hljs-string">etcd:2400</span>
+      <span class="hljs-attr">MINIO_ADDRESS:</span> <span class="hljs-string">minio:9000</span>
+      <span class="hljs-attr">MQ_TYPE:</span> <span class="hljs-string">woodpecker</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"./milvus:/var/lib/milvus"</span>
+    <span class="hljs-attr">healthcheck:</span>
+      <span class="hljs-attr">test:</span> <span class="hljs-string">["CMD",</span> <span class="hljs-string">"curl"</span><span class="hljs-string">,</span> <span class="hljs-string">"-f"</span><span class="hljs-string">,</span> <span class="hljs-string">"http://localhost:9091/healthz"</span><span class="hljs-string">]</span>
+      <span class="hljs-attr">interval:</span> <span class="hljs-string">30s</span>
+      <span class="hljs-attr">start_period:</span> <span class="hljs-string">90s</span>
+      <span class="hljs-attr">timeout:</span> <span class="hljs-string">20s</span>
+      <span class="hljs-attr">retries:</span> <span class="hljs-number">3</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"19530:19530"</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"9091:9091"</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"etcd"</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">"minio"</span>
+
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">default:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">milvus</span>
+</div></code></pre>
+<p>使用 <code>:wq</code> 命令保存文件并退出。</p>
+<p>同样执行以下命令启动 Milvus 服务：</p>
+<pre class="hljs"><code><div>docker compose up -d
+</div></code></pre>
+<p><img src="./images/milvus_up.png" alt="Milvus Up"></p>
+<p>若需关闭服务，请返回该文件夹并在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>docker compose down
+</div></code></pre>
+<h4 id="python-%E7%8E%AF%E5%A2%83">Python 环境</h4>
+<p>安装 Python 3.12+，在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+</div></code></pre>
+<pre class="hljs"><code><div>sudo apt install python3.12
+</div></code></pre>
+<p>安装完成后，执行以下命令验证安装结果：</p>
+<pre class="hljs"><code><div>python3.12 --version
+</div></code></pre>
+<p><img src="./images/python_version.png" alt="python version"></p>
+<p>返回 <code>odlm_test</code> 文件夹，创建一个 <code>code</code> 文件夹，用于存放最佳实践所需的代码文件。</p>
+<pre class="hljs"><code><div>mkdir code
+</div></code></pre>
+<p>将 <code>docs.tar.gz</code> 压缩包中 <code>code</code> 文件夹的内容解压到新创建的 <code>code</code> 文件夹中。</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 显示你目前的路径</span>
+<span class="hljs-built_in">pwd</span>
+<span class="hljs-comment"># /home/user/asiainfo/odlm_test</span>
+tar -xzvf docs.tar.gz --strip-components=1 -C /home/user/asiainfo/odlm_test/code <span class="hljs-string">'code/'</span>
+</div></code></pre>
+<p>代码解压完成后，使用 Poetry 初始化并安装python环境依赖：</p>
+<p>打开命令行，输入命令来安装poetry</p>
+<pre class="hljs"><code><div>curl -sSL https://install.python-poetry.org | python3 -
+</div></code></pre>
+<p>等待安装完成后，在命令行中输入，检查安装是否成功</p>
+<pre class="hljs"><code><div>poetry --version
+
+<span class="hljs-comment"># 输出样例</span>
+<span class="hljs-comment"># Poetry (version 1.8.2)</span>
+</div></code></pre>
+<p>安装shell插件</p>
+<pre class="hljs"><code><div>poetry self add poetry-plugin-shell
+</div></code></pre>
+<p>前往你刚刚新建的<code>code</code>文件夹，然后打开terminal执行命令来安装依赖</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 假设你在odlm_test文件夹内</span>
+<span class="hljs-built_in">cd</span> code
+poetry shell
+poetry install
+</div></code></pre>
+<p>Python 环境配置完成。</p>
+<h3 id="42-%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE">4.2 应用配置</h3>
+<p>参考 <code>code/config</code> 目录下的 <code>config.development.example.yaml</code> 配置文件进行配置</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 应用的启动环境，保持不动即可</span>
+<span class="hljs-attr">app:</span>
+  <span class="hljs-attr">environment:</span> <span class="hljs-string">development</span>
+<span class="hljs-comment"># 应用的启动端口，保持不动即可</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8000</span>
+  <span class="hljs-attr">reload:</span> <span class="hljs-literal">true</span>
+  <span class="hljs-attr">debug:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">databases:</span>
+<span class="hljs-comment"># mysql连接配置，配置内容与你启动mysql时一致</span>
+  <span class="hljs-attr">mysql:</span>
+    <span class="hljs-attr">host:</span> <span class="hljs-string">localhost</span>
+    <span class="hljs-attr">port:</span> <span class="hljs-number">3306</span>
+    <span class="hljs-attr">user:</span> <span class="hljs-string">root</span>
+    <span class="hljs-attr">password:</span> <span class="hljs-number">123456</span>
+    <span class="hljs-attr">database:</span> <span class="hljs-string">test_db</span>
+<span class="hljs-comment"># neo4j连接配置，配置内容与你启动neo4j时一致</span>
+  <span class="hljs-attr">neo4j:</span>
+    <span class="hljs-attr">host:</span> <span class="hljs-string">localhost</span>
+    <span class="hljs-attr">port:</span> <span class="hljs-number">7687</span>
+    <span class="hljs-attr">user:</span> <span class="hljs-string">neo4j</span>
+    <span class="hljs-attr">password:</span> <span class="hljs-number">123456</span>
+    <span class="hljs-attr">database:</span> <span class="hljs-string">neo4j</span>
+<span class="hljs-comment"># milvus连接配置，配置内容与你启动milvus时一致</span>
+  <span class="hljs-attr">milvus:</span>
+    <span class="hljs-attr">uri:</span> <span class="hljs-string">"http://localhost:19530"</span>
+    <span class="hljs-attr">db_name:</span> <span class="hljs-string">"ontology"</span>
+<span class="hljs-comment"># AI相关配置，按需进行替换，需要开通对应的LLM和Embedding服务</span>
+<span class="hljs-attr">ai_services:</span>
+  <span class="hljs-attr">default_llm:</span> <span class="hljs-string">openai</span>
+  <span class="hljs-attr">default_embedding:</span> <span class="hljs-string">local</span>
+  <span class="hljs-attr">llm:</span>
+    <span class="hljs-attr">openai:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">openai</span>
+      <span class="hljs-attr">api_key:</span> <span class="hljs-string">sk-your-dev-key</span>
+      <span class="hljs-attr">model:</span> <span class="hljs-string">gpt-4o</span>
+  <span class="hljs-attr">embedding:</span>
+    <span class="hljs-attr">local:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">sentence-transformers</span>
+      <span class="hljs-attr">host:</span> <span class="hljs-string">http://127.0.0.1:8000</span>
+      <span class="hljs-attr">model:</span> <span class="hljs-string">all-MiniLM-L6-v2</span>
+</div></code></pre>
+<p>为了生成配置文件，请进入 <code>code</code> 文件夹，再进入 <code>config</code> 文件夹，在终端中执行以下命令：</p>
+<pre class="hljs"><code><div>mv config.development.example.yaml config.development.yaml
+</div></code></pre>
+<p>这将创建一个新的配置文件。请打开 <code>config.development.yaml</code> 文件，将上述配置信息复制并覆盖原有内容，然后根据实际情况进行修改。</p>
+<p>返回 <code>code</code> 文件夹，在终端中执行以下命令启动应用（用于验证依赖是否正确）：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 如果该打开的terminal未运行过poetry shell，则先运行poetry shell来开启环境</span>
+python app.py
+</div></code></pre>
+<p><img src="./images/app_up.png" alt="app UP"></p>
+<h3 id="43-%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96">4.3 启动与初始化</h3>
+<p>在 <code>code</code> 文件夹内打开终端。</p>
+<h4 id="%E5%88%9D%E5%A7%8B%E5%8C%96-neo4j-%E5%9B%BE%E7%BB%93%E6%9E%84">初始化 Neo4j 图结构</h4>
+<p>执行脚本构建系统图结构，包含所有 Concept、Class、ObjectProperty 和 DataProperty 节点。</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 如果该打开的terminal未运行过poetry shell，则先运行poetry shell来开启环境</span>
+python graph_init.py
+
+<span class="hljs-comment"># 输出</span>
+<span class="hljs-comment"># 已完成neo4j初始化</span>
+</div></code></pre>
+<p>登录 Neo4j Browser（<code>http://localhost:7474</code>）验证是否已创建基础结构。
+<img src="./images/neo4j_example.png" alt="neo4j example"></p>
+<h4 id="%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8-mysql-%E8%A1%A8">初始化测试用 MySQL 表</h4>
+<p>在终端中执行以下脚本：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 如果该打开的terminal未运行过poetry shell，则先运行poetry shell来开启环境</span>
+python mysql_init.py
+
+<span class="hljs-comment"># 输出</span>
+<span class="hljs-comment"># 已完成mysql初始化</span>
+</div></code></pre>
+<p>初始化 MySQL 并添加测试表与数据。该脚本将在 MySQL 中创建一个名为 <code>test_db</code> 的测试数据库，其中包含四张测试表及其样例数据。</p>
+<p><img src="./images/quanwangjituankehu_table.png" alt="全网集团客户商品订购信息">
+<img src="./images/a45014.png" alt="a45014">
+<img src="./images/a45034.png" alt="a45034">
+<img src="./images/prov_city.png" alt="prov_city"></p>
+<h4 id="%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8-milvus-%E5%BA%93">初始化测试用 Milvus 库</h4>
+<p>在终端中执行以下脚本：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 如果该打开的terminal未运行过poetry shell，则先运行poetry shell来开启环境</span>
+python milvus_init.py
+
+<span class="hljs-comment"># 输出</span>
+<span class="hljs-comment"># 已完成milvus初始化</span>
+</div></code></pre>
+<p>该脚本将在 Milvus 中创建测试所需的数据库、集合和模式。</p>
+<hr>
+<h3 id="44-%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B">4.4 运行示例</h3>
+<h4 id="%E6%96%B9%E6%A1%88%E4%B8%80-%E9%80%9A%E8%BF%87-ttl-%E6%B3%A8%E5%86%8C%E6%9C%AC%E4%BD%93%E5%AE%9E%E4%BE%8B%E6%95%AC%E8%AF%B7%E6%9C%9F%E5%BE%85">方案一： 通过 TTL 注册本体实例（敬请期待）</h4>
+<h4 id="%E6%96%B9%E6%A1%88%E4%BA%8C-%E9%80%9A%E8%BF%87-python-api-%E6%B3%A8%E5%86%8C%E6%9C%AC%E4%BD%93%E5%AE%9E%E4%BE%8B">方案二： 通过 Python API 注册本体实例</h4>
+<p>在 <code>code</code> 文件夹中，打开终端并执行以下脚本：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># 先运行poetry shell，如果之前当前打开的terminal没有运行过的话，用于打开python环境</span>
+<span class="hljs-comment"># poetry shell</span>
+python example.py
+
+<span class="hljs-comment"># 输出</span>
+<span class="hljs-comment"># 样例数据已添加至neo4j图谱中</span>
+</div></code></pre>
+<p>图谱中将新增节点与关系，可在 Neo4j Browser 中进行可视化查看。请访问 http://localhost:7474 进行查看。</p>
+<p>在浏览器的查询编辑器中输入以下内容，然后点击执行按钮查询特定本体节点：</p>
+<pre class="hljs"><code><div>MATCH (n:Instance {name:&quot;&lt;obj-001&gt;全网集团客户商品订购信息&quot;}) RETURN n
+</div></code></pre>
+<p><img src="./images/cypher_example.png" alt="cypher example"></p>
+<p>双击显示的节点进行展开，然后可以根据需要点击不同节点进行探索。</p>
+<p><img src="./images/click_node.png" alt="clieck node"></p>
+<p><img src="./images/data_in_neo4j.png" alt="data in neo4j"></p>
+<p>图谱中将新增一个名为“全网集团客户商品订购信息”的本体对象，以及该本体的相关属性（如“商品规格编号”、“EC集团客户编码”等）。同时创建该本体所映射的源表、字段，以及生成源表的任务及其所使用的表。这些数据将用于后续测试中的血缘分析流程验证。</p>
+<h4 id="%E4%BD%BF%E7%94%A8-agent-%E5%BF%AB%E9%80%9F%E9%AA%8C%E8%AF%81%E5%8F%AF%E9%80%89%E9%9C%80%E8%A6%81%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%AF%8D%E5%B5%8C%E5%85%A5%E6%9C%8D%E5%8A%A1">使用 Agent 快速验证（可选，需要大模型服务和词嵌入服务）</h4>
+<p>为了便于快速上手，这里提供了一个可用于快速测试的 Agent，其包含三个可用工具：</p>
+<ul>
+<li><code>query_by_cypher</code>：通过cypher语句查询neo4j数据库，但是只能进行查询，禁止进行写入和删除操作。</li>
+<li><code>search_for_precise_node_name</code>：通过文本相似度检索的方式，搜索neo4j数据库中的节点名称。因为大多数时候用户输入的节点名称或是数据名称是模糊的，所以需要通过这种方式来先确定精确的节点名称然后再编写cypher语句。</li>
+<li><code>find_binding_data_of_object</code>：通过源表名和sql查询语句，查询关系型数据库中的存储的真实数据。</li>
+</ul>
+<p>这些工具的定义可在 <code>code/tools.py</code> 中查看。</p>
+<p>测试 Agent 基于大语言模型驱动，因此使用 Agent 需要配置相关的模型服务。同时需要词嵌入模型服务对用户查询进行向量化处理。</p>
+<p>请编辑 <code>code/config/config.development.yaml</code> 文件，配置其中的模型服务和词嵌入服务：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># AI相关配置，按需进行替换，需要开通对应的LLM和Embedding服务</span>
+<span class="hljs-attr">ai_services:</span>
+  <span class="hljs-attr">default_llm:</span> <span class="hljs-string">openai</span>
+  <span class="hljs-attr">default_embedding:</span> <span class="hljs-string">local</span>
+  <span class="hljs-attr">llm:</span>
+    <span class="hljs-attr">openai:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">openai</span>
+      <span class="hljs-attr">api_key:</span> <span class="hljs-string">sk-your-dev-key</span>
+      <span class="hljs-attr">model:</span> <span class="hljs-string">gpt-4o</span>
+  <span class="hljs-attr">embedding:</span>
+    <span class="hljs-attr">local:</span>
+      <span class="hljs-attr">name:</span> <span class="hljs-string">sentence-transformers</span>
+      <span class="hljs-attr">host:</span> <span class="hljs-string">http://127.0.0.1:8000</span>
+      <span class="hljs-attr">model:</span> <span class="hljs-string">all-MiniLM-L6-v2</span>
+</div></code></pre>
+<p>Agent 的提示词模板：</p>
+<pre class="hljs"><code><div># 角色
+你是一名数据分析专家，作为我们数据系统平台的智能助手，帮助用户解决所有关于数据分析的问题。
+
+# 能力
+你可以通过不同的工具来与不同的数据库进行交互。以下是你可以使用的工具：
+query_by_cypher：通过cypher语句查询neo4j数据库，但是只能进行查询，禁止进行写入和删除操作。
+search_for_precise_node_name：通过文本相似度检索的方式，搜索neo4j数据库中的节点名称。因为大多数时候用户输入的节点名称或是数据名称是模糊的，所以需要通过这种方式来先确定精确的节点名称然后再编写cypher语句。
+find_binding_data_of_object：通过源表名和sql查询语句，查询关系型数据库中的存储的真实数据。
+
+# 数据系统的背景
+我们的数据系统是基于本体论构建出来的，所有的实例的label都是Instance，每一个实例都来自于某一个label为Class的本体节点。实例与实例之间也许会存在关系，
+实例与实例之间的关系也有可能会出现推导/推理关系，比如某一张表的字段，可能来自于另一张表中的字段，那么这两张表也就会存在关系，但是这个关系属于隐性关系，
+需要通过多轮的cypher查询来进行推理得出。
+
+目前系统中，有以下Class：
+- Task: 系统中的任务，比如ETL任务等，每一个任务实例都拥有对应的输入和输出
+- Field: 表/数据模型中的字段
+- Table: 表/数据模型
+- MySQL: 数据源的其中一种
+- User: 系统中的用户
+- Object: 用户基于本体概念构建的对象，与系统中的某个表或数据模型进行绑定，用于查询真实数据
+- ObjectField: 本体对象中的字段，与系统中的某个表或数据模型中的字段进行绑定，用于查询真实数据
+
+Class下的实例之间有以下关系：
+'Field' - [FIELDFROMTABLE] -&gt; 'Table'
+'Field' - [FIELDTRANSFORMEDFROM] -&gt; 'Field'
+'Table' - [TABLEBELONGSTODATASOURCE] -&gt; 'MySQL'
+'Task' - [USED] -&gt; 'Table'
+'Task' - [TASK_OWNER] -&gt; 'User'
+'Task' - [GENERATED] -&gt; 'Table'
+'ObjectField' - [ISOBJECTFIELDOF] -&gt; 'Object'
+'ObjectField' - [ISOBJECTFIELDFROM] -&gt; 'Field'
+'Object' - [OBJECTCREATEDFROM] -&gt; 'Table' //本体对象绑定的哪个表
+
+举个例子，如果我们要检索user表有哪些字段，那么查询语句可以这么写：
+MATCH (t:Instance {{{{name: 'user'}}}})&lt;-[:FIELDFROMTABLE]-(f:Instance) RETURN f.name SKIP 0 * 10 LIMIT 10
+因为user是Table的实例，所以我们可以通过FIELDFROMTABLE关系来找到user表的所有字段。
+
+可以通过每个节点属性中的instance_of属性来判断节点属于哪个Class。
+
+你可以先查询一个节点有哪些属性，这样可以帮助你更好的理解节点可执行的操作。
+
+# 你的任务
+你需要基于用户请求，利用工具，逐步推导并检索出支撑解决用户需求的结果。也就是说，你需要调用工具，观察工具的结果，再规划下一步行动并再次调用工具。
+
+这个流程也许会重复很多次，直到你认为你已经找到了足够的信息来支撑解决用户需求。
+
+# 可供参考的任务流程
+- 血缘分析
+基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+
+# 开始！
+</div></code></pre>
+<p>接下来，使用 Agent 基于 ODLM 进行血缘分析测试验证。</p>
+<p>在 <code>code</code> 文件夹中，创建一个 <code>agent_test.py</code> 文件，将以下代码复制到文件中并保存：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> auto_agent <span class="hljs-keyword">import</span> AutoAgent
+
+auto_agent = AutoAgent()
+
+<span class="hljs-comment"># '全网集团客户商品订购信息都使用了哪些表, 并帮我分析这些表的血缘'为提问Agent的内容，可按需更换提问</span>
+res = <span class="hljs-keyword">await</span> auto_agent.run(<span class="hljs-string">"全网集团客户商品订购信息都使用了哪些表, 并帮我分析这些表的血缘"</span>)
+</div></code></pre>
+<p>在终端中执行以下命令运行该测试脚本：</p>
+<pre class="hljs"><code><div>
+<span class="hljs-comment"># 如果该打开的terminal未运行过poetry shell，则先运行poetry shell来开启环境</span>
+python agent_test.py
+</div></code></pre>
+<p>将显示相应的 Agent 输出结果：</p>
+<pre class="hljs"><code><div>2025-08-13 14:04:36.897 | INFO     | utils.databases.mysql.mysql_service:__init__:85 - MySQL service initialized for database: odlm at localhost:3306
+2025-08-13 14:04:36.898 | INFO     | utils.databases.service_factory:create_mysql_service:65 - MySQL service created: MySQLService(host=localhost, database=odlm)
+2025-08-13 14:04:36.919 | INFO     | utils.databases.mysql.mysql_service:_get_async_pool:95 - Async MySQL connection pool created successfully
+2025-08-13 14:04:36.928 | DEBUG    | utils.databases.mysql.mysql_service:afetch_all:240 - Fetch all completed, rows: 2
+2025-08-13 14:04:42.093 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:04:47.744 | INFO     | core.llm.tools.neo4j_tools:search_for_precise_node_name:41 - search_for_precise_node_name node_name: 集团客户商品订购信息
+2025-08-13 14:04:48.336 | INFO     | utils.databases.service_factory:create_qdrant_service:168 - Qdrant service created with local_mode=False
+2025-08-13 14:04:49.626 | INFO     | core.llm.tools.neo4j_tools:search_for_precise_node_name:53 - search_for_precise_node_name result: ['name: 全网集团客户商品订购信息, is_instance_of: Object, labels: Instance', 'name: 集团个人业务订购信息_产品来源, is_instance_of: ObjectField, labels: Instance', 'name: 全网集团客户商品订购信息_订购时间, is_instance_of: ObjectField, labels: Instance', 'name: 全网集团客户商品订购信息_业务开展模式, is_instance_of: ObjectField, labels: Instance', 'name: 集团个人业务订购信息_集团客户标识, is_instance_of: ObjectField, labels: Instance']
+2025-08-13 14:04:49.640 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:04:57.848 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:04:57.850 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:04:57.851 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (o:Instance {name: '全网集团客户商品订购信息'})-[:OBJECTCREATEDFROM]-&gt;(t:Instance) RETURN t.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:04:58.336 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:04:58.336 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'t.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf'}]
+2025-08-13 14:04:58.338 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:05.262 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:05.263 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:05.264 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf'})&lt;-[:FIELDFROMTABLE]-(f:Instance) RETURN f.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:05.632 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 10 records
+2025-08-13 14:05:05.632 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_prov_id'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_cust_belo_prov_id_5digits'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_cust_belo_prov_id'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_statis_ymd'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_status_chng_tm'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_ord_status_type_code'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_sign_body'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_remark'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_ord_tm'}, {'f.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_prod_lvl'}]
+2025-08-13 14:05:05.634 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:12.864 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:12.865 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:12.865 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf'})-[:TABLEBELONGSTODATASOURCE]-&gt;(d:Instance) RETURN d.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:13.159 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:05:13.160 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'d.name': 'db_copilot_mcp'}]
+2025-08-13 14:05:13.162 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:20.402 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:20.403 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:20.404 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf'})&lt;-[:GENERATED]-(task:Instance) RETURN task.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:20.614 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:05:20.615 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'task.name': 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task'}]
+2025-08-13 14:05:20.616 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:28.951 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:28.952 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:28.952 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (task:Instance {name: 'tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task'})-[:USED]-&gt;(t:Instance) RETURN t.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:29.136 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 3 records
+2025-08-13 14:05:29.137 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'t.name': 't_dim_n_md_h_prov_city'}, {'t.name': 'to_d_pty_cm_a45014_headquat_cust_info'}, {'t.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info'}]
+2025-08-13 14:05:29.139 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:36.186 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:36.186 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:36.187 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info'})&lt;-[:FIELDFROMTABLE]-(f:Instance) RETURN f.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:36.229 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 10 records
+2025-08-13 14:05:36.230 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_statis_ymd'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_exp_date'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_eff_date'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_status_chng_tm'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_ord_status_type_code'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_sign_body'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_remark'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_ord_tm'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_prod_lvl'}, {'f.name': 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info_pkg_status_type'}]
+2025-08-13 14:05:36.232 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:43.718 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:43.719 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:43.720 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info'})-[:TABLEBELONGSTODATASOURCE]-&gt;(d:Instance) RETURN d.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:43.808 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:05:43.809 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'d.name': 'db_copilot_mcp'}]
+2025-08-13 14:05:43.811 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:50.728 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:50.728 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:50.730 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info'})&lt;-[:GENERATED]-(task:Instance) RETURN task.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:50.824 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 0 records
+2025-08-13 14:05:50.825 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: []
+2025-08-13 14:05:50.826 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:05:57.549 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:05:57.550 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:05:57.550 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'to_d_pty_cm_a45014_headquat_cust_info'})&lt;-[:FIELDFROMTABLE]-(f:Instance) RETURN f.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:05:57.589 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:05:57.590 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'f.name': 'to_d_pty_cm_a45014_headquat_cust_info_belo_prov_id'}]
+2025-08-13 14:05:57.593 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:06:04.623 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:06:04.624 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:06:04.625 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'to_d_pty_cm_a45014_headquat_cust_info'})-[:TABLEBELONGSTODATASOURCE]-&gt;(d:Instance) RETURN d.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:06:04.650 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:06:04.651 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'d.name': 'db_copilot_mcp'}]
+2025-08-13 14:06:04.653 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:06:11.503 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:06:11.503 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:06:11.504 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 'to_d_pty_cm_a45014_headquat_cust_info'})&lt;-[:GENERATED]-(task:Instance) RETURN task.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:06:11.548 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 0 records
+2025-08-13 14:06:11.549 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: []
+2025-08-13 14:06:11.550 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:06:18.180 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:06:18.181 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:06:18.181 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 't_dim_n_md_h_prov_city'})&lt;-[:FIELDFROMTABLE]-(f:Instance) RETURN f.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:06:18.233 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:06:18.234 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'f.name': 't_dim_n_md_h_prov_city_prov_id_5'}]
+2025-08-13 14:06:18.235 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:06:25.269 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:06:25.271 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:06:25.272 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 't_dim_n_md_h_prov_city'})-[:TABLEBELONGSTODATASOURCE]-&gt;(d:Instance) RETURN d.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:06:25.327 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 1 records
+2025-08-13 14:06:25.328 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: [{'d.name': 'db_copilot_mcp'}]
+2025-08-13 14:06:25.330 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+2025-08-13 14:06:31.510 | INFO     | utils.databases.neo4j.neo4j_service:__init__:86 - Neo4j service initialized for database: neo4j at bolt://localhost:7687
+2025-08-13 14:06:31.511 | INFO     | utils.databases.service_factory:create_neo4j_service:117 - Neo4j service created: Neo4jService(uri=bolt://localhost:7687, database=neo4j)
+2025-08-13 14:06:31.511 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:21 - query_by_cypher cypher: MATCH (t:Instance {name: 't_dim_n_md_h_prov_city'})&lt;-[:GENERATED]-(task:Instance) RETURN task.name SKIP 0 * 10 LIMIT 10
+2025-08-13 14:06:31.564 | DEBUG    | utils.databases.neo4j.neo4j_service:run_query:162 - Query executed successfully, returned 0 records
+2025-08-13 14:06:31.564 | INFO     | core.llm.tools.neo4j_tools:query_by_cypher:24 - query_by_cypher result: []
+2025-08-13 14:06:31.566 | INFO     | core.llm.agents.auto_agent:auto_search_agent:84 - task_context: 
+            血缘分析
+            基于给定的目标数据，系统性的进行血缘分析，需要依序进行推理，一层一层的找到数据来源。
+
+每找到一个目标节点后，需要根据节点的属性和关系，推理出下一个目标节点，直到找到最上层的instance节点。
+            
+### 分析结果
+
+#### 1. **使用的表**
+全网集团客户商品订购信息主要使用了以下表：
+- **主表**：`tw_d_svc_is_unitntw_group_cust_comdt_ord_inf`
+- **关联表**：
+  - `tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info`
+  - `to_d_pty_cm_a45014_headquat_cust_info`
+  - `t_dim_n_md_h_prov_city`
+
+#### 2. **血缘分析**
+1. **主表 `tw_d_svc_is_unitntw_group_cust_comdt_ord_inf`**
+   - **字段**：包含多个字段，如 `prov_id`、`cust_belo_prov_id`、`statis_ymd` 等。
+   - **数据源**：`db_copilot_mcp`
+   - **生成任务**：`tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task`
+
+2. **生成任务 `tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task`**
+   - **使用的表**：
+     - `tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info`
+     - `to_d_pty_cm_a45014_headquat_cust_info`
+     - `t_dim_n_md_h_prov_city`
+
+3. **关联表分析**
+   - **`tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info`**
+     - **字段**：包含 `statis_ymd`、`exp_date`、`eff_date` 等字段。
+     - **数据源**：`db_copilot_mcp`
+     - **生成任务**：未找到直接生成任务。
+   - **`to_d_pty_cm_a45014_headquat_cust_info`**
+     - **字段**：包含 `belo_prov_id` 字段。
+     - **数据源**：`db_copilot_mcp`
+     - **生成任务**：未找到直接生成任务。
+   - **`t_dim_n_md_h_prov_city`**
+     - **字段**：包含 `prov_id_5` 字段。
+     - **数据源**：`db_copilot_mcp`
+     - **生成任务**：未找到直接生成任务。
+
+#### 3. **血缘关系总结**
+- 主表 `tw_d_svc_is_unitntw_group_cust_comdt_ord_inf` 的数据来源于三个关联表：
+  - `tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info`
+  - `to_d_pty_cm_a45014_headquat_cust_info`
+  - `t_dim_n_md_h_prov_city`
+- 这些关联表均来自同一个数据源 `db_copilot_mcp`，但未找到更上层的生成任务或表。
+
+如果需要进一步分析某个表的具体数据或字段来源，可以继续深入查询。
+</div></code></pre>
+<p>从输出结果可以验证，大语言模型成功利用 ODLM 架构进行了血缘分析，具体推理逻辑如下：</p>
+<pre class="hljs"><code><div>查询内容：全网集团客户商品订购信息都使用了哪些表，并帮我分析这些表的血缘
+智能体回复解析：
+Step 1：
+调用向量知识库，进一步确定用户查询中关键词的语义，锁定图谱中存储的对应节点，锁定的节点名称为：全网集团客户商品订购信息
+Step 2：
+访问图谱数据库，检索全网集团客户商品订购信息对象的映射源表，找到 tw_d_svc_is_unitntw_group_cust_comdt_ord_inf
+Step 3：
+通过找到的源表，查询源表的所有字段
+Step 4：
+查询源表的数据源
+Step 5：
+查询源表由哪个任务执行生成，找到 tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task 任务
+Step 6：
+查询该任务的输入表，获得三张输入表
+Step 7：
+分别获取三张表的数据源、字段以及是否存在关联任务
+Step 8：
+获得所有信息，并生成问题回复，回复内容：
+分析结果
+
+1. 使用的表
+全网集团客户商品订购信息主要使用了以下表：
+- 主表：tw_d_svc_is_unitntw_group_cust_comdt_ord_inf
+- 关联表：
+  - tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info
+  - to_d_pty_cm_a45014_headquat_cust_info
+  - t_dim_n_md_h_prov_city
+2. 血缘分析
+1. 主表 tw_d_svc_is_unitntw_group_cust_comdt_ord_inf
+  - 字段：包含多个字段，如 prov_id、cust_belo_prov_id、statis_ymd 等。
+  - 数据源：db_copilot_mcp
+  - 生成任务：tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task
+2. 生成任务 tw_d_svc_is_unitntw_group_cust_comdt_ord_inf_union_task
+  - 使用的表：
+    - tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info
+    - to_d_pty_cm_a45014_headquat_cust_info
+    - t_dim_n_md_h_prov_city
+3. 关联表分析
+  - tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info
+    - 字段：包含 statis_ymd、exp_date、eff_date 等字段。
+    - 数据源：db_copilot_mcp
+    - 生成任务：未找到直接生成任务。
+  - to_d_pty_cm_a45014_headquat_cust_info
+    - 字段：包含 belo_prov_id 字段。
+    - 数据源：db_copilot_mcp
+    - 生成任务：未找到直接生成任务。
+  - t_dim_n_md_h_prov_city
+    - 字段：包含 prov_id_5 字段。
+    - 数据源：db_copilot_mcp
+    - 生成任务：未找到直接生成任务。
+3. 血缘关系总结
+- 主表 tw_d_svc_is_unitntw_group_cust_comdt_ord_inf 的数据来源于三个关联表：
+  - tb_d_svc_is_a45034_unitntw_cust_comdt_ord_base_info
+  - to_d_pty_cm_a45014_headquat_cust_info
+  - t_dim_n_md_h_prov_city
+- 这些关联表均来自同一个数据源 db_copilot_mcp，但未找到更上层的生成任务或表。
+如果需要进一步分析某个表的具体数据或字段来源，可以继续深入查询
+</div></code></pre>
+<hr>
+<h2 id="5-%E5%B8%B8%E7%94%A8%E5%BB%BA%E6%A8%A1%E6%A8%A1%E5%BC%8F">5. 常用建模模式</h2>
+<ul>
+<li>表-字段结构：<code>Table --(hasField/belongsToTable)--&gt; Field</code>
+<ul>
+<li>在 <code>odlm.ttl</code> 中，<code>hasField</code>/<code>belongsToTable</code> 已互为逆，用其一即可；</li>
+</ul>
+</li>
+<li>外键与依赖：<code>Field --(references)--&gt; Field</code> 推导 <code>Table --(dependsOn)--&gt; Table</code>
+<ul>
+<li><code>references</code>、<code>dependsOn</code> 为传递属性，可进行跨层链式溯源；</li>
+</ul>
+</li>
+<li>治理元数据：<code>owner</code>、<code>belongsToTeam</code>、<code>tableBelongsToWorkspace</code>、<code>belongsToCluster</code>
+<ul>
+<li>集群归属具备属性链：表继承数据源的集群；</li>
+</ul>
+</li>
+<li>发布与变更：<code>publishStatus</code>、<code>changeStatus</code> 跨实体复用；</li>
+<li>对象建模：<code>Object</code>/<code>ObjectField</code> 适用于面向应用的语义视图。</li>
+<li>原子指标（<code>odlm:AtomicMetric</code>）
+<ul>
+<li>关键属性：<code>atomicMetricId</code>、<code>sourceTable</code>、<code>measureField</code>、<code>measureMethod</code>、<code>dateDimension</code>、<code>unit</code>、<code>businessFormula</code>；</li>
+</ul>
+</li>
+<li>派生指标（<code>odlm:DerivedMetric</code>）
+<ul>
+<li>基于原子指标与维度组合，常见属性：<code>derivedMetricId</code>、<code>storageType</code>、<code>unit</code>、<code>derivedDimension</code>/<code>timeDimension</code>、<code>statPeriod</code>；</li>
+</ul>
+</li>
+<li>业务限定（<code>odlm:BusinessQualifier</code>）
+<ul>
+<li>用于表达 SQL 片段级的条件/限定：<code>relatedTable</code>、<code>relatedField</code>、<code>calculationLogic</code>；</li>
+</ul>
+</li>
+<li>维度体系（<code>odlm:Dimension</code>/<code>odlm:DimensionAttribute</code>）
+<ul>
+<li><code>Dimension --(hasAttribute)--&gt; DimensionAttribute --(dimensionField)--&gt; Field</code>；</li>
+<li>使用 <code>attributeCount</code>、<code>lastUpdateBy/Time</code> 维护治理信息。</li>
+</ul>
+</li>
+<li>传递性/链式语义通过图路径实现：
+<ul>
+<li><code>odlm:references</code>、<code>odlm:dependsOn</code> 在 Neo4j 中通过多跳关系匹配实现传递性；</li>
+<li><code>dependsOn</code> 的链式语义（<code>hasField ∘ references ∘ belongsToTable</code>）通过固定查询模板求解；</li>
+<li><code>relatedSchema</code> 的关联通过 <code>containsTable ∘ dependsOn ∘ belongsToSchema</code> 的复合路径求解（对称性通过查询双向匹配确保）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="6-neo4j-%E6%9F%A5%E8%AF%A2%E6%8C%87%E5%8D%97">6. Neo4j 查询指南</h2>
+<h3 id="61-%E6%A6%82%E5%BF%B5-%E7%B1%BB-%E5%AE%9E%E4%BE%8B%E6%98%A0%E5%B0%84%E5%BB%BA%E8%AE%AE">6.1 概念-类-实例映射建议</h3>
+<ul>
+<li>概念（Concept）作为上位分类，可在 Neo4j 中实现为标签前缀或分组标签（如 <code>Concept:Agent</code>、<code>Concept:Activity</code>）。</li>
+<li>类（Class）作为可实例化的类型，对应主标签（如 <code>odlm:User</code>、<code>odlm:Task</code>、<code>odlm:Table</code>）。</li>
+<li>实例（Instance）附属于类标签，并带有业务主键（如 <code>tableId</code>、<code>fieldId</code>）。</li>
+<li>属性分型：
+<ul>
+<li>数据属性（DataProperty）→ 节点属性（键值对）或附属 <code>Literal</code> 节点（根据策略而定）；</li>
+<li>对象属性（ObjectProperty）→ 关系边（如 <code>[:belongsToTable]</code> 等）。</li>
+</ul>
+</li>
+<li>继承处理：对继承的属性在导入时一并物化到子类节点，或在查询时使用标签并集匹配父级语义。</li>
+</ul>
+<h3 id="62-%E5%90%91%E9%87%8F%E5%BA%93%E9%9B%86%E6%88%90">6.2 向量库集成</h3>
+<ul>
+<li>以 <code>rdfs:label</code>、<code>odlm:alias</code> 及描述性数据拼接为文本向量；</li>
+<li>对用户查询进行向量检索，选取 Top-K 候选类/实例，再返回 Neo4j 进行结构化精确匹配；</li>
+<li>对于歧义情况，优先选择具有更高图连通性或更强约束信息的候选节点。</li>
+</ul>
+<h3 id="63-%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E6%A8%A1%E5%BC%8F">6.3 常用查询模式</h3>
+<ul>
+<li>活动使用/生成的实体查询：</li>
+</ul>
+<pre class="hljs"><code><div>MATCH (activityConcept:`Concept`{name:&quot;Activity&quot;})
+MATCH (subclass)-[:SUBCLASS_OF*0..]-&gt;(activityConcept)  // 遍历所有子类（包括自身）
+MATCH (activity_instance)-[:IS_INSTANCE_OF]-&gt;(subclass)        // 找到这些类的实例
+MATCH (activity_instance)-[:USED]-&gt;(input_instance)                         // 匹配实例的 used 关系
+RETURN activity_instance, input_instance
+</div></code></pre>
+<ul>
+<li>对象到物理字段映射查询：</li>
+</ul>
+<pre class="hljs"><code><div>MATCH (of:`Instance`{instance_of:&quot;ObjectField&quot;})-[:`ISOBJECTFIELDFROM`]-&gt;(f:`Instance`{instance_of:&quot;Field&quot;})
+RETURN of.`name`, f.`name`
+</div></code></pre>
+
+</body>
+</html>

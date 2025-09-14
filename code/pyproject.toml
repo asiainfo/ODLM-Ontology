@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "odlm-python"
+version = "0.1.0"
+description = ""
+authors = ["yifanchang <yifanchang08@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain = "^0.3.27"
+langchain-community = "^0.3.27"
+langchain-experimental = "^0.3.4"
+langgraph = "^0.6.2"
+langchain-openai = "^0.3.28"
+langchain-qdrant = "^0.2.0"
+fastapi = {extras = ["standard"], version = "^0.116.1"}
+loguru = "^0.7.3"
+aiomysql = "^0.2.0"
+pymysql = "^1.1.1"
+neo4j = "^5.28.2"
+pydantic = "^2.11.7"
+pydantic-settings = "^2.10.1"
+pyyaml = "^6.0.2"
+cryptography = "^45.0.6"
+langchain-postgres = "^0.0.15"
+sqlalchemy = "^2.0.43"
+sqlmodel = "^0.0.24"
+asyncpg = "^0.30.0"
+pymilvus = "^2.6.0"
+langchain-milvus = "^0.2.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.30.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+priority = "primary"  # 将该源设置为默认源

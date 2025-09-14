@@ -1,0 +1,1688 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix odlm: <http://asiainfo.com/odlm#> .
+@prefix ex:    <http://asiainfo.com/odlm-instances#> .
+
+# Ontology Declaration
+<http://asiainfo.com/odlm> a owl:Ontology ;
+    rdfs:label "亚信数据生命周期管理本体" ;
+    dcterms:description "定义数据生命周期管理相关的类和属性" ;
+    dcterms:created "2025-08-23"^^<http://www.w3.org/2001/XMLSchema#date> ;
+    owl:versionInfo "1.0" .
+
+### 核心资源本体 ###
+odlm:Entity a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "实体" .
+
+odlm:Activity a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "活动/任务" .
+
+odlm:Resource a owl:Class ;
+    rdfs:subClassOf odlm:Entity, dcterms:Resource ;
+    rdfs:label "资源" .
+
+odlm:DataSource a owl:Class ;
+    rdfs:subClassOf odlm:Resource, dcat:Catalog ;
+    rdfs:label "数据源" ;
+    dcterms:description "原始数据的来源系统或存储位置" .
+
+odlm:Dataset a owl:Class ;
+    rdfs:subClassOf dcat:Dataset, odlm:Resource ;
+    rdfs:label "数据集" .
+
+odlm:Service a owl:Class ;
+    rdfs:subClassOf dcat:DataService, odlm:Resource ;
+    rdfs:label "服务" .
+
+odlm:Task a owl:Class ;
+    rdfs:subClassOf odlm:Activity, odlm:Resource ;
+    rdfs:label "任务" ;
+    dcterms:description "数据操作流程如ETL、血缘解析等" .
+
+odlm:Dimension a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:label "维度" ;
+    dcterms:description "用于分析指标的上下文属性" .
+
+odlm:Metric a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:label "指标" ;
+    dcterms:description "可量化的业务度量标准" .
+
+odlm:Standard a owl:Class ;
+    rdfs:subClassOf odlm:Entity ;
+    rdfs:label "标准" ;
+    dcterms:description: "系统中的标准体系，比如字段标准等" .
+
+odlm:Rule a owl:Class ;
+    rdfs:subClassOf odlm:Entity ;
+    rdfs:label "规则" ;
+    dcterms:description: "在系统中对不同实体起到特定规范作用的规则" .
+
+odlm:ruleTemplate a owl:Class ;
+    rdfs:subClassOf odlm:Entity ;
+    rdfs:label "规则模板" ;
+    dcterms:description: "一个规则模板可包含多个规则" .
+
+odlm:Log a owl:Class ;
+    rdfs:subClassOf odlm:Entity ;
+    rdfs:label "日志" ;
+    dcterms:description: "系统流转、执行过程中产生的日志" .
+
+# 基础设施类
+odlm:Engine a owl:Class ;
+    rdfs:subClassOf prov:SoftwareAgent, odlm:Resource ;
+    rdfs:label "引擎" ;
+    dcterms:description "数据处理执行引擎" .
+
+odlm:Cluster a owl:Class ;
+    rdfs:subClassOf prov:Collection, odlm:Resource ;
+    rdfs:label "集群" ;
+    dcterms:description "资源集合的计算环境" .
+
+### 组织本体 ###
+odlm:Organization a owl:Class ;
+    rdfs:subClassOf prov:Organization ;
+    rdfs:label "组织" .
+
+odlm:Department a owl:Class ;
+    rdfs:subClassOf odlm:Organization ;
+    rdfs:label "部门" .
+
+odlm:Team a owl:Class ;
+    rdfs:subClassOf odlm:Organization ;
+    rdfs:label "团队" ;
+    dcterms:description "协作单元" .
+
+# 用户和角色
+odlm:User a owl:Class ;
+    rdfs:subClassOf prov:Person ;
+    rdfs:label "用户" .
+    
+odlm:Role a owl:Class ;
+    rdfs:subClassOf prov:Role ;
+    rdfs:label "角色" .
+
+odlm:Permission a owl:Class ;
+    rdfs:subClassOf odlm:Entity ;
+    rdfs:label "权限" .
+
+# 工作空间
+odlm:Workspace a owl:Class ;
+    rdfs:subClassOf odlm:Organization ;
+    rdfs:label "工作空间" .
+
+odlm:Object a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:comment "用户创建的本体对象，作为某物理表的语义映射" ;
+    rdfs:label "本体对象" .
+
+odlm:ObjectField a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:comment "用户创建的本体对象属性/字段，作为某物理表中字段的语义映射" ;
+    rdfs:label "本体对象属性" .
+
+##################################
+#  通用属性定义
+##################################
+
+# 通用别名属性 - 适用于所有实体
+odlm:alias a owl:DatatypeProperty ;
+    rdfs:label "别名"@zh ;
+    rdfs:range xsd:string ;
+    rdfs:comment "通用别名属性，适用于所有实体、属性和活动"@zh .
+
+# 通用描述属性 - 适用于所有实体
+odlm:description a owl:DatatypeProperty ;
+    rdfs:label "描述"@zh ;
+    rdfs:range xsd:string ;
+    rdfs:comment "通用描述属性，适用于所有实体、属性和活动"@zh .
+
+# 标准关系描述
+odlm:followStandard a owl:ObjectProperty ;
+    rdfs:label "遵循标准"@zh ;
+    rdfs:comment "某一实体遵循某一标准"@zh .
+
+# 规则关系描述
+odlm:hasRule a owl:ObjectProperty ;
+    rdfs:label "拥有规则"@zh ;
+    rdfs:comment "某一实体拥有哪些规则"@zh .
+
+odlm:appliesTo a owl:ObjectProperty ;
+    rdfs:label "应用于"@zh ;
+    rdfs:comment "某一实体应用于另一实体"@zh ;
+    rdfs:domain odlm:Entity ;
+    rdfs:range  odlm:Entity .
+
+odlm:isAppliedBy owl:inverseOf odlm:appliesTo .
+
+odlm:belongsToRuleTemp  a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:isPartOf ;
+    rdfs:label "所属规则模板"@zh ;
+    rdfs:domain odlm:Rule ;
+    rdfs:range  odlm:ruleTemplate .
+
+odlm:logGeneratedBy   a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:wasGeneratedBy ;
+    rdfs:label "由某activity生成的日志"@zh ;
+    rdfs:domain odlm:Log ;
+    rdfs:range  odlm:Activity .
+
+odlm:linkedWith a owl:SymmetricProperty ;
+    rdfs:label "两个实体之间存在关联关系"@zh ;
+    rdfs:domain odlm:Entity ;
+    rdfs:range  odlm:Entity .
+
+odlm:hasPermission   a owl:ObjectProperty ;
+    rdfs:label "一个角色拥有哪些权限"@zh ;
+    rdfs:domain odlm:Role ;
+    rdfs:range  odlm:Permission .
+
+odlm:hasRole   a owl:ObjectProperty ;
+    rdfs:label "一个用户拥有的角色"@zh ;
+    rdfs:domain odlm:User ;
+    rdfs:range  odlm:Role .
+
+odlm:hasDirectPermission    a owl:ObjectProperty ;
+    rdfs:domain odlm:User ;
+    rdfs:range  odlm:Permission ;
+    rdfs:subPropertyOf [
+        a owl:ObjectProperty ;
+        owl:propertyChainAxiom ( odlm:hasRole odlm:hasPermission )
+    ] ;
+    rdfs:label "用户通过角色继承到的权限"@zh .
+
+odlm:delegatedBy    a owl:ObjectProperty ;
+    rdfs:label "团队授权用户"@zh ;
+    rdfs:domain odlm:User ;
+    rdfs:range  odlm:Team .
+
+odlm:teamWorkWithSpace  a owl:ObjectProperty ;
+    rdfs:label "团队在空间下工作"@zh ;
+    rdfs:domain odlm:Team ;
+    rdfs:range  odlm:Workspace .
+
+odlm:userWorkWithSpace  a owl:ObjectProperty ;
+    rdfs:label "用户在空间下工作"@zh ;
+    rdfs:domain odlm:User ;
+    rdfs:range  odlm:Workspace .
+
+odlm:servesDataset a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcat:servesDataset ;
+    rdfs:domain odlm:Service ;
+    rdfs:range  odlm:Dataset .
+
+odlm:objectOwner a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:owner ;
+    rdfs:domain odlm:Object ;
+    rdfs:range  odlm:User .
+
+odlm:objectCreatedFrom a owl:ObjectProperty ;
+    rdfs:label "对象创建来源" ;
+    rdfs:domain odlm:Object ;
+    rdfs:range  odlm:Table .
+
+odlm:objectDisplayName a owl:DataProperty ;
+    rdfs:label "对象的展示属性" ;
+    rdfs:domain odlm:Object ;
+    rdfs:range xsd:string .
+
+odlm:objectId a owl:DataProperty ;
+    rdfs:label "对象唯一标识" ;
+    rdfs:domain odlm:Object ;
+    rdfs:range xsd:string .
+
+odlm:useCase a owl:DataProperty ;
+    rdfs:label "对象使用场景" ;
+    rdfs:domain odlm:Object ;
+    rdfs:range xsd:string .
+
+odlm:isObjectFieldOf  a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:isPartOf ;
+    rdfs:label "对象类型字段来自于哪个对象"@zh ;
+    rdfs:domain odlm:ObjectField ;
+    rdfs:range  odlm:Object .
+
+odlm:isObjectFieldFrom  a owl:ObjectProperty ;
+    rdfs:label "对象类型字段映射的源表字段"@zh ;
+    rdfs:domain odlm:ObjectField ;
+    rdfs:range  odlm:Field .
+
+odlm:generated  a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:generated ;
+    rdfs:label "某个Activity生成了某个Entity"@zh ;
+    rdfs:domain odlm:Activity ;
+    rdfs:range  odlm:Entity .
+
+odlm:wasGeneratedBy  a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasGeneratedBy ;
+    rdfs:label "Entity由某个Activity生成"@zh ;
+    rdfs:domain odlm:Entity ;
+    rdfs:range  odlm:Activity .
+
+odlm:used  a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:used ;
+    rdfs:label "某个Activity使用了某些Entity"@zh ;
+    rdfs:domain odlm:Activity ;
+    rdfs:range  odlm:Entity .
+
+##################################
+#  数据源子类
+##################################
+
+#  公共属性（一次性声明在父类）
+odlm:dataSourceId   a owl:DatatypeProperty ;
+    rdfs:label "ID"@zh ;
+    rdfs:domain odlm:DataSource ;       
+    rdfs:range xsd:string ;
+    rdfs:comment "唯一标识，一般对应系统中资源的英文名"@zh .
+
+odlm:version a owl:DatatypeProperty ;
+    rdfs:label "版本"@zh ;
+    rdfs:domain odlm:DataSource ;
+    rdfs:range xsd:string .
+
+# Kerberos 支持公共属性
+odlm:KerberosSupport a owl:Class ;
+    rdfs:label "支持 Kerberos 的数据源"@zh .
+
+odlm:enableKerberos a owl:DatatypeProperty ;
+    rdfs:label "开启 Kerberos 认证"@zh ;
+    rdfs:domain odlm:KerberosSupport ;
+    rdfs:range xsd:boolean .
+
+odlm:kerberosPrincipal a owl:DatatypeProperty ;
+    rdfs:label "Kerberos Principal"@zh ;
+    rdfs:domain odlm:KerberosSupport ;
+    rdfs:range xsd:string .
+
+odlm:keytabFile a owl:DatatypeProperty ;
+    rdfs:label "keytab 文件"@zh ;
+    rdfs:domain odlm:KerberosSupport ;
+    rdfs:range xsd:string .
+
+odlm:krb5File a owl:DatatypeProperty ;
+    rdfs:label "krb5 文件"@zh ;
+    rdfs:domain odlm:KerberosSupport ;
+    rdfs:range xsd:string .
+
+# ---------- MySQL ----------
+odlm:MySQL a owl:Class ;
+    rdfs:subClassOf odlm:DataSource ;
+    rdfs:label "MySQL 数据源" ;
+    rdfs:comment "一种基于 MySQL 的关系型数据源"@zh .
+
+# ---------- 业务属性 ----------
+odlm:jdbcUrl a owl:DatatypeProperty ;
+    rdfs:label "JDBC 连接地址"@zh ;
+    rdfs:domain odlm:MySQL ;
+    rdfs:range xsd:string ;
+    rdfs:comment "MySQL 的 JDBC 访问地址"@zh .
+
+odlm:userName a owl:DatatypeProperty ;
+    rdfs:label "用户名"@zh ;
+    rdfs:domain odlm:MySQL ;
+    rdfs:range xsd:string ;
+    rdfs:comment "用于 JDBC 认证的用户名"@zh .
+
+odlm:password a owl:DatatypeProperty ;
+    rdfs:label "密码"@zh ;
+    rdfs:domain odlm:MySQL ;
+    rdfs:range xsd:string ;
+    rdfs:comment "用于 JDBC 认证的密码"@zh .
+
+# ---------- Hive ----------
+odlm:Hive a owl:Class ;
+    rdfs:subClassOf odlm:DataSource, odlm:KerberosSupport ;
+    rdfs:label "Hive 数据源"@zh ;
+    rdfs:comment "基于 Hadoop/Hive 的数据仓库数据源"@zh .
+
+# ---------- 业务属性 ----------
+odlm:jdbcUrl    a owl:DatatypeProperty ;
+    rdfs:label "JDBC 访问地址"@zh ;
+    rdfs:domain odlm:Hive ; rdfs:range xsd:string .
+
+odlm:executionEngine a owl:ObjectProperty ;
+    rdfs:label "执行引擎"@zh ;
+    rdfs:domain odlm:Hive ;
+    rdfs:range odlm:Engine .           # 指向 odlm:Engine 枚举实例
+
+odlm:cluster    a owl:ObjectProperty ;
+    rdfs:label "集群"@zh ;
+    rdfs:domain odlm:Hive ;
+    rdfs:range odlm:Cluster .          # 指向 odlm:Cluster 枚举实例
+
+odlm:queueName  a owl:DatatypeProperty ;
+    rdfs:label "队列名"@zh ;
+    rdfs:domain odlm:Hive ; 
+    rdfs:range xsd:string .
+
+odlm:metaDatabase a owl:DatatypeProperty ;
+    rdfs:label "元数据库"@zh ;
+    rdfs:domain odlm:Hive ; 
+    rdfs:range xsd:string .
+
+odlm:storagePath a owl:DatatypeProperty ;
+    rdfs:label "存储路径"@zh ;
+    rdfs:domain odlm:Hive ; 
+    rdfs:range xsd:string .
+
+odlm:configDir a owl:DatatypeProperty ;
+    rdfs:label "配置文件目录"@zh ;
+    rdfs:domain odlm:Hive ; 
+    rdfs:range xsd:string .
+
+# ---------- HBase ----------
+
+odlm:HBase a owl:Class ;
+    rdfs:subClassOf odlm:DataSource, odlm:KerberosSupport ;
+    rdfs:label "HBase 数据源"@zh ;
+    rdfs:comment "基于 HDFS 的分布式列式存储数据源"@zh .
+
+# ---------- 业务属性 ----------
+
+odlm:hbaseZookeeperQuorum a owl:DatatypeProperty ;
+    rdfs:label "hbase.zookeeper.quorum"@zh ;
+    rdfs:domain odlm:HBase ; rdfs:range xsd:string .
+
+odlm:hbaseZookeeperClientPort a owl:DatatypeProperty ;
+    rdfs:label "hbase.zookeeper.property.clientPort"@zh ;
+    rdfs:domain odlm:HBase ; rdfs:range xsd:string .  
+
+odlm:zookeeperZnodeParent a owl:DatatypeProperty ;
+    rdfs:label "ZooKeeper Znode Parent"@zh ;
+    rdfs:domain odlm:HBase ; rdfs:range xsd:string .
+
+odlm:namespace      a owl:DatatypeProperty ;
+    rdfs:label "namespace"@zh ;
+    rdfs:domain odlm:HBase ; rdfs:range xsd:string .
+
+odlm:hbaseConf      a owl:DatatypeProperty ;
+    rdfs:label "HBase 配置"@zh ;
+    rdfs:domain odlm:HBase ; rdfs:range xsd:string .
+
+# ---------- Kafka ----------
+odlm:Kafka a owl:Class ;
+    rdfs:subClassOf odlm:DataSource, odlm:KerberosSupport ;
+    rdfs:label "Kafka 数据源"@zh ;
+    rdfs:comment "Kafka 消息队列数据源"@zh .
+
+# ---------- 业务属性 ----------
+odlm:bootstrapServers a owl:DatatypeProperty ;
+    rdfs:label "连接地址"@zh ;
+    rdfs:domain odlm:Kafka ; rdfs:range xsd:string .
+
+odlm:kafkaConf      a owl:DatatypeProperty ;
+    rdfs:label "Kafka 配置"@zh ;
+    rdfs:domain odlm:Kafka ; rdfs:range xsd:string .
+
+odlm:userName       a owl:DatatypeProperty ;
+    rdfs:label "用户名"@zh ;
+    rdfs:domain odlm:Kafka ; rdfs:range xsd:string .
+
+odlm:password       a owl:DatatypeProperty ;
+    rdfs:label "密码"@zh ;
+    rdfs:domain odlm:Kafka ; rdfs:range xsd:string .
+
+# ---------- MinIO ----------
+odlm:MinIO a owl:Class ;
+    rdfs:subClassOf odlm:DataSource ;
+    rdfs:label "MinIO 数据源"@zh ;
+    rdfs:comment "兼容 S3 的对象存储数据源"@zh .
+
+# ---------- 业务属性 ----------
+odlm:url            a owl:DatatypeProperty ;
+    rdfs:label "协议地址"@zh ;
+    rdfs:domain odlm:MinIO ; rdfs:range xsd:string .
+
+odlm:userName       a owl:DatatypeProperty ;
+    rdfs:label "用户名"@zh ;
+    rdfs:domain odlm:MinIO ; rdfs:range xsd:string .
+
+odlm:password       a owl:DatatypeProperty ;
+    rdfs:label "密码"@zh ;
+    rdfs:domain odlm:MinIO ; rdfs:range xsd:string .
+
+##################################
+#  数据集子类
+##################################
+### Schema 定义 ###
+odlm:Schema a owl:Class ;
+    rdfs:subClassOf odlm:Dataset ;
+    rdfs:label "数据模型"@zh ;
+    dcterms:description "逻辑数据模型，包含一组相关的表和字段"@zh .
+
+odlm:containsTable a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    rdfs:label "包含表"@zh ;
+    rdfs:domain odlm:Schema ;
+    rdfs:range odlm:Table ;
+    owl:inverseOf odlm:belongsToSchema .
+
+odlm:belongsToTable  a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:isPartOf ;
+    rdfs:label "所属表"@zh ;
+    rdfs:domain odlm:Field ;
+    rdfs:range  odlm:Table ;
+    owl:inverseOf odlm:hasField .
+
+odlm:hasField  a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:hasPart ;
+    rdfs:label "包含字段"@zh .
+    #rdfs:domain odlm:Table ;
+    #rdfs:range  odlm:Field .
+
+### 在 Table 类中添加属性 ###
+odlm:belongsToSchema a owl:ObjectProperty ;
+    rdfs:subPropertyOf dcterms:isPartOf ;
+    rdfs:label "所属数据模型"@zh ;
+#    rdfs:domain odlm:Table ;
+#    rdfs:range odlm:Schema ;
+    owl:inverseOf odlm:containsTable .
+
+### Schema 关联推理规则 ###
+odlm:relatedSchema  a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:label "关联数据模型"@zh ;
+    rdfs:domain odlm:Schema ;
+    rdfs:range  odlm:Schema ;
+    owl:propertyChainAxiom (
+        odlm:containsTable
+        odlm:dependsOn
+        odlm:belongsToSchema
+    ) .
+
+#  公共表类：odlm:Table
+odlm:Table a owl:Class ;
+    rdfs:subClassOf odlm:Dataset ;
+    rdfs:label "表"@zh ;
+    rdfs:comment "逻辑或物理的数据表"@zh .
+
+odlm:tableStandard a owl:Class ;
+    rdfs:subClassOf odlm:Standard ;
+    rdfs:label "表标准"@zh ;
+    dcterms:description "表标准实体，一个表标准可以映射多个表" .
+
+# ---------- 通用属性 ----------
+odlm:tableId a owl:DatatypeProperty ;
+    rdfs:label "ID"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:tableFollowStandard a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:followStandard ;
+    rdfs:label "表遵循某一标准"@zh ;
+    rdfs:comment "一个表标准可以映射多个表" ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:tableStandard .
+
+odlm:belongsToDataSource a owl:ObjectProperty ;
+    rdfs:label "所属数据源"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:DataSource .
+
+odlm:tableCycle a owl:ObjectProperty ;
+    rdfs:label "表周期"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:UpdateCycle .          # 小时/日/周/月等枚举实例
+
+odlm:layer a owl:ObjectProperty ;
+    rdfs:label "层级"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:DataLayer .            # 来源于数据架构字典
+
+odlm:belongsToTeam a owl:ObjectProperty ;
+    rdfs:label "所属团队"@zh ;
+    rdfs:domain [ owl:unionOf ( odlm:Table odlm:User odlm:DataSource) ] ;
+    rdfs:range odlm:Team .
+
+odlm:tableBelongsToWorkspace a owl:ObjectProperty ;
+    rdfs:label "所属工作空间"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:Workspace .
+
+odlm:belongsToCluster a owl:ObjectProperty ;
+    rdfs:label "所属集群"@zh ;
+    rdfs:domain [ owl:unionOf ( odlm:Table odlm:DataSource ) ] ;
+    rdfs:range odlm:Cluster ;
+    # 属性链推理：如果表属于数据源，且数据源属于集群，则表也属于集群
+    owl:propertyChainAxiom ( odlm:belongsToDataSource odlm:belongsToCluster ) .
+
+odlm:owner a owl:ObjectProperty ;
+    rdfs:label "负责人"@zh ;
+    rdfs:domain [ owl:unionOf ( odlm:Table odlm:Task odlm:Standard ) ] ;
+    rdfs:range odlm:User .
+
+odlm:ownerContact a owl:DatatypeProperty ;
+    rdfs:label "负责人联系方式"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:processingRule a owl:DatatypeProperty ;
+    rdfs:label "加工口径"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:functionDesc a owl:DatatypeProperty ;
+    rdfs:label "功能描述"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:scenario a owl:DatatypeProperty ;
+    rdfs:label "应用场景"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:importance a owl:DatatypeProperty ;
+    rdfs:label "重要等级"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:changeStatus a owl:ObjectProperty ;
+    rdfs:label "变更状态"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:ChangeStatus .         # 变更/审核中/未变更
+
+#odlm:publishStatus a owl:ObjectProperty ;
+#    rdfs:label "发布状态"@zh ;
+#    rdfs:domain odlm:Table ;
+#    rdfs:range odlm:PublishStatus .        # 已发布/未发布/待审
+
+odlm:publishStatus a owl:ObjectProperty ;
+    rdfs:label "发布状态"@zh ;
+    rdfs:domain [ owl:unionOf ( odlm:Table odlm:Task odlm:AtomicMetric odlm:DerivedMetric ) ] ;
+    rdfs:range odlm:PublishStatus .
+
+odlm:dataSourceType a owl:ObjectProperty ;
+    rdfs:label "数据来源"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:DataSourceType .       # 采集/模型开发
+
+odlm:sourceSystem a owl:ObjectProperty ;
+    rdfs:label "来源系统"@zh ;
+    rdfs:domain odlm:Table ;
+    rdfs:range odlm:System .               # 外围系统本体实例
+
+odlm:updateMethod a owl:DatatypeProperty ;
+    rdfs:label "更新方式"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:updateTime a owl:DatatypeProperty ;
+    rdfs:label "更新时间"@zh ;
+    rdfs:domain [ owl:unionOf ( odlm:Table odlm:Task ) ] ;
+    rdfs:range xsd:dateTime .
+
+odlm:isMaterialized a owl:DatatypeProperty ;
+    rdfs:label "是否物化"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:boolean .
+
+odlm:attrComplete a owl:DatatypeProperty ;
+    rdfs:label "属性是否完整"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:boolean .
+
+odlm:rowCount a owl:DatatypeProperty ;
+    rdfs:label "数据条数"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:totalSize a owl:DatatypeProperty ;
+    rdfs:label "总存储量"@zh ;
+    rdfs:domain odlm:Table ; rdfs:range xsd:string .
+
+odlm:references a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:label "引用字段"@zh ;
+    rdfs:domain odlm:Field ;
+    rdfs:range  odlm:Field ;
+    rdfs:comment "c1 references c2  表示 c1 是 c2 的外键, 具备传递性：A依赖B且B依赖C，则A依赖C" .
+
+odlm:dependsOn    a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:domain odlm:Table ;
+    rdfs:range  odlm:Table ;
+    owl:propertyChainAxiom ( odlm:hasField odlm:references odlm:belongsToTable ) ;
+    rdfs:comment "如果表 A 的某列引用了表 B 的某列，则 A dependsOn B。具备传递性：A依赖B且B依赖C，则A依赖C" .
+
+#  Hive 表专用子类
+odlm:HiveTable a owl:Class ;
+    rdfs:subClassOf odlm:Table ;
+    rdfs:label "Hive 表"@zh ;
+    rdfs:comment "存储在 Hive 中的表"@zh .
+
+# Hive 表专用 ID 属性
+odlm:hiveTableId a owl:DatatypeProperty ;
+    rdfs:label "Hive表ID"@zh ;
+    rdfs:domain odlm:HiveTable ;
+    rdfs:range xsd:string .
+
+odlm:isPartitioned a owl:DatatypeProperty ;
+    rdfs:label "是否分区"@zh ;
+    rdfs:domain odlm:HiveTable ; rdfs:range xsd:boolean .
+
+odlm:isExternal a owl:DatatypeProperty ;
+    rdfs:label "是否外部表"@zh ;
+    rdfs:domain odlm:HiveTable ; rdfs:range xsd:boolean .
+
+odlm:externalLocation a owl:DatatypeProperty ;
+    rdfs:label "外部表地址"@zh ;
+    rdfs:domain odlm:HiveTable ; rdfs:range xsd:string .
+    # 当 isExternal = true 时必填，由 SHACL/应用层校验
+
+odlm:fileFormat a owl:ObjectProperty ;
+    rdfs:label "文件格式"@zh ;
+    rdfs:domain odlm:HiveTable ;
+    rdfs:range odlm:FileFormat .           # ORC/Parquet/Text 等枚举
+
+odlm:columnDelimiter a owl:ObjectProperty ;
+    rdfs:label "列分隔符"@zh ;
+    rdfs:domain odlm:HiveTable ;
+    rdfs:range odlm:Delimiter .            # , | \t | ^A 等枚举
+
+odlm:hdfsPath a owl:DatatypeProperty ;
+    rdfs:label "文件存储路径"@zh ;
+    rdfs:domain odlm:HiveTable ; rdfs:range xsd:string .
+
+odlm:compressionType a owl:ObjectProperty ;
+    rdfs:label "压缩类型"@zh ;
+    rdfs:domain odlm:HiveTable ;
+    rdfs:range odlm:CompressionType .      # Snappy/Gzip/None 等枚举
+
+### 枚举定义
+odlm:UpdateCycle   a owl:Class ; rdfs:label "更新周期枚举"@zh .
+odlm:DataLayer     a owl:Class ; rdfs:label "数据层级枚举"@zh .
+odlm:ChangeStatus  a owl:Class ; rdfs:label "变更状态枚举"@zh .
+odlm:PublishStatus a owl:Class ; rdfs:label "发布状态枚举"@zh .
+odlm:DataSourceType a owl:Class ; rdfs:label "数据来源类型枚举"@zh .
+odlm:FileFormat    a owl:Class ; rdfs:label "文件格式枚举"@zh .
+odlm:Delimiter     a owl:Class ; rdfs:label "分隔符枚举"@zh .
+odlm:CompressionType a owl:Class ; rdfs:label "压缩类型枚举"@zh .
+
+# ----------- 字段定义 -----------
+#  通用字段类：odlm:Field
+
+odlm:Field a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:label "字段"@zh ;
+    rdfs:comment "表中的列或字段"@zh .
+
+odlm:fieldStandard a owl:Class ;
+    rdfs:subClassOf odlm:Standard ;
+    rdfs:label "字段标准"@zh ;
+    dcterms:description "字段标准实体，一个字段标准可以映射多个字段" .
+
+# ---------- 通用属性 ----------
+odlm:fieldId a owl:DatatypeProperty ;
+    rdfs:label "ID"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:string .
+
+odlm:fieldFollowStandard a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:followStandard ;
+    rdfs:label "字段遵循某一标准"@zh ;
+    rdfs:comment "一个字段标准可以映射多个字段" ;
+    rdfs:domain odlm:Field ;
+    rdfs:range odlm:fieldStandard .
+
+odlm:fieldStandardHasRule a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:hasRule ;
+    rdfs:label "字段标准规则"@zh ;
+    rdfs:comment "依据字段标准可生成多个规则" ;
+    rdfs:domain odlm:fieldStandard ;
+    rdfs:range odlm:Rule .
+
+odlm:businessMeaning a owl:DatatypeProperty ;
+    rdfs:label "业务含义"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:string .
+
+odlm:fieldType a owl:ObjectProperty ;
+    rdfs:label "字段类型"@zh ;
+    rdfs:domain odlm:Field ;
+    rdfs:range odlm:FieldType .            # 来源字段类型字典
+
+odlm:length a owl:DatatypeProperty ;
+    rdfs:label "长度"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:string .
+
+odlm:precision a owl:DatatypeProperty ;
+    rdfs:label "精度"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:string .
+
+odlm:isPrimaryKey a owl:DatatypeProperty ;
+    rdfs:label "是否主键"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:boolean .
+
+odlm:isNullable a owl:DatatypeProperty ;
+    rdfs:label "是否为空"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:boolean .
+
+odlm:defaultValue a owl:DatatypeProperty ;
+    rdfs:label "默认值"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:string .
+
+
+
+odlm:securityCategory a owl:ObjectProperty ;
+    rdfs:label "安全分类"@zh ;
+    rdfs:domain odlm:Field ;
+    rdfs:range odlm:SecurityCategory .     # 安全分类字典
+
+odlm:securityLevel a owl:ObjectProperty ;
+    rdfs:label "安全分级"@zh ;
+    rdfs:domain odlm:Field ;
+    rdfs:range odlm:SecurityLevel .        # 安全分级字典
+
+odlm:isDimension a owl:DatatypeProperty ;
+    rdfs:label "是否维度"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:boolean .
+
+odlm:isMeasure a owl:DatatypeProperty ;
+    rdfs:label "是否度量"@zh ;
+    rdfs:domain odlm:Field ; rdfs:range xsd:boolean .
+
+#  Hive 字段子类：odlm:HiveField
+odlm:HiveField a owl:Class ;
+    rdfs:subClassOf odlm:Field ;
+    rdfs:label "Hive 字段"@zh ;
+    rdfs:comment "Hive 表中的字段"@zh .
+
+# Hive 字段专用 ID 属性
+odlm:hiveFieldId a owl:DatatypeProperty ;
+    rdfs:label "Hive字段ID"@zh ;
+    rdfs:domain odlm:HiveField ;
+    rdfs:range xsd:string .
+
+odlm:partitionKey a owl:ObjectProperty ;
+    rdfs:label "分区键"@zh ;
+    rdfs:domain odlm:HiveField ;
+    rdfs:range odlm:PartitionKey .         # 来源分区键字典
+
+odlm:isTimeIdentifier a owl:DatatypeProperty ;
+    rdfs:label "时间标识"@zh ;
+    rdfs:domain odlm:HiveField ; rdfs:range xsd:boolean .
+
+# 枚举值定义
+odlm:FieldType        a owl:Class ; rdfs:label "字段类型枚举"@zh .
+odlm:SecurityCategory a owl:Class ; rdfs:label "安全分类枚举"@zh .
+odlm:SecurityLevel    a owl:Class ; rdfs:label "安全分级枚举"@zh .
+odlm:PartitionKey     a owl:Class ; rdfs:label "分区键枚举"@zh .
+
+##################################
+#  任务属性定义
+##################################
+odlm:taskId a owl:DatatypeProperty ;
+    rdfs:label "任务ID"@zh ;
+    rdfs:domain odlm:Task ; rdfs:range xsd:string .
+
+odlm:taskPurpose a owl:ObjectProperty ;
+    rdfs:label "任务用途"@zh ;
+    rdfs:domain odlm:Task ;
+    rdfs:range odlm:TaskPurpose .          # ETL / 加工 / 稽核等枚举
+
+odlm:executionMode a owl:ObjectProperty ;
+    rdfs:label "实时/离线"@zh ;
+    rdfs:domain odlm:Task ;
+    rdfs:range odlm:ExecutionMode .        # 实时、离线等枚举
+
+odlm:devMode a owl:ObjectProperty ;
+    rdfs:label "开发模式"@zh ;
+    rdfs:domain odlm:Task ;
+    rdfs:range odlm:DevMode .              # 离线采集、实时采集、FLinkSQL…
+
+odlm:taskCycle a owl:ObjectProperty ;
+    rdfs:label "任务周期"@zh ;
+    rdfs:domain odlm:Task ;
+    rdfs:range odlm:ScheduleCycle .        # 小时、日、周、月…
+
+odlm:taskBelongsToWorkspace a owl:ObjectProperty ;
+    rdfs:label "所属工作空间"@zh ;
+    rdfs:domain odlm:Task ;
+    rdfs:range odlm:Workspace .
+
+#odlm:owner a owl:ObjectProperty ;
+#    rdfs:label "负责人"@zh ;
+#    rdfs:domain odlm:Task ;
+#    rdfs:range odlm:User .
+
+#odlm:publishStatus a owl:ObjectProperty ;
+#    rdfs:label "发布状态"@zh ;
+#    rdfs:domain odlm:Task ;
+#    rdfs:range odlm:PublishStatus .        # 新建、生效、失效…
+
+#odlm:updateTime a owl:DatatypeProperty ;
+#    rdfs:label "更新时间"@zh ;
+#    rdfs:domain odlm:Task ; rdfs:range xsd:dateTime .
+
+#odlm:version a owl:DatatypeProperty ;
+#    rdfs:label "版本"@zh ;
+#    rdfs:domain odlm:Task ; rdfs:range xsd:string .
+
+odlm:isIncremental a owl:DatatypeProperty ;
+    rdfs:label "采集模式"@zh ;
+    rdfs:domain odlm:Task ; rdfs:range xsd:boolean .  # true=增量 / false=全量
+
+#  枚举类
+odlm:TaskPurpose   a owl:Class ; rdfs:label "任务用途枚举"@zh .
+odlm:ExecutionMode a owl:Class ; rdfs:label "执行模式枚举"@zh .
+odlm:DevMode       a owl:Class ; rdfs:label "开发模式枚举"@zh .
+odlm:ScheduleCycle a owl:Class ; rdfs:label "调度周期枚举"@zh .
+
+##################################
+#  维度定义
+##################################
+odlm:dimensionId a owl:DatatypeProperty ;
+    rdfs:label "维度ID"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range xsd:string .
+
+odlm:dimensionStandard a owl:Class ;
+    rdfs:subClassOf odlm:Standard ;
+    rdfs:label "维度标准"@zh ;
+    dcterms:description "维度标准实体，一个维度标准可以映射多个维度" .
+
+odlm:dimensionFollowStandard a owl:ObjectProperty ;
+    rdfs:subPropertyOf odlm:followStandard ;
+    rdfs:label "维度遵循某一标准"@zh ;
+    rdfs:comment "一个维度标准可以映射多个维度" ;
+    rdfs:domain odlm:Dimension ;
+    rdfs:range odlm:dimensionStandard .
+
+odlm:lastUpdateBy a owl:ObjectProperty ;
+    rdfs:label "最近更新人"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range odlm:User .
+
+odlm:lastUpdateTime a owl:DatatypeProperty ;
+    rdfs:label "更新时间"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range xsd:dateTime .
+
+odlm:attributeCount a owl:DatatypeProperty ;
+    rdfs:label "属性数"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range xsd:integer .
+
+# 指向维度表（必需）
+odlm:dimensionTable a owl:ObjectProperty ;
+    rdfs:label "维度表"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range odlm:Table .
+
+# 维度包含 1~N 个维度属性
+odlm:hasAttribute a owl:ObjectProperty ;
+    rdfs:label "包含维度属性"@zh ;
+    rdfs:domain odlm:Dimension ; rdfs:range odlm:DimensionAttribute .
+
+# 反向：属性→维度
+odlm:belongsToDimension owl:inverseOf odlm:hasAttribute .
+
+##################################
+#  维度属性类
+##################################
+odlm:DimensionAttribute a owl:Class ;
+    rdfs:subClassOf odlm:Resource ;
+    rdfs:label "维度属性"@zh ;
+    dcterms:description "维度下的一个可分析字段"@zh .
+
+odlm:attrId a owl:DatatypeProperty ;
+    rdfs:label "维度属性标识"@zh ;
+    rdfs:domain odlm:DimensionAttribute ; rdfs:range xsd:string .
+
+odlm:attrName a owl:DatatypeProperty ;
+    rdfs:label "维度属性名称"@zh ;
+    rdfs:domain odlm:DimensionAttribute ; rdfs:range xsd:string .
+
+odlm:attrDesc a owl:DatatypeProperty ;
+    rdfs:label "维度属性描述"@zh ;
+    rdfs:domain odlm:DimensionAttribute ; rdfs:range xsd:string .
+
+# 指向具体字段（必需）
+odlm:dimensionField a owl:ObjectProperty ;
+    rdfs:label "维度字段"@zh ;
+    rdfs:domain odlm:DimensionAttribute ; rdfs:range odlm:Field .
+
+##################################
+#  业务限定指标
+##################################
+odlm:BusinessQualifier a owl:Class ;
+    rdfs:subClassOf odlm:Metric ;
+    rdfs:label "业务限定"@zh ;
+    dcterms:description "指标计算规则片段，通过 SQL 逻辑绑定到表与字段"@zh .
+
+# ---------- 属性 ----------
+odlm:businessQualifierId a owl:DatatypeProperty ;
+    rdfs:label "业务限定ID"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range xsd:string .
+
+
+
+odlm:lastUpdateBy a owl:ObjectProperty ;
+    rdfs:label "最近更新人"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range odlm:User .
+
+odlm:lastUpdateTime a owl:DatatypeProperty ;
+    rdfs:label "更新时间"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range xsd:dateTime .
+
+# 关联的模型（表）
+odlm:relatedTable a owl:ObjectProperty ;
+    rdfs:label "关联模型（表）"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range odlm:Table .
+
+# 关联的字段
+odlm:relatedField a owl:ObjectProperty ;
+    rdfs:label "关联字段"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range odlm:Field .
+
+# 计算逻辑（SQL 片段）
+odlm:calculationLogic a owl:DatatypeProperty ;
+    rdfs:label "计算逻辑"@zh ;
+    rdfs:domain odlm:BusinessQualifier ; rdfs:range xsd:string .
+
+##################################
+#  原子指标类
+##################################
+odlm:AtomicMetric a owl:Class ;
+    rdfs:subClassOf odlm:Metric ;
+    rdfs:label "原子指标"@zh ;
+    dcterms:description "不可再分的业务度量，基于单表单字段聚合"@zh .
+
+# ---------- 属性 ----------
+odlm:atomicMetricId a owl:DatatypeProperty ;
+    rdfs:label "原子指标ID"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range xsd:string .
+
+odlm:belongsToCatalog a owl:ObjectProperty ;
+    rdfs:label "所属目录"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:MetricCatalog .
+
+odlm:createdBy a owl:ObjectProperty ;
+    rdfs:label "创建人"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:User .
+
+odlm:createdTime a owl:DatatypeProperty ;
+    rdfs:label "创建时间"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range xsd:dateTime .
+
+#odlm:publishStatus a owl:ObjectProperty ;
+#    rdfs:label "发布状态"@zh ;
+#    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:PublishStatus .
+
+odlm:unit a owl:ObjectProperty ;
+    rdfs:label "度量单位"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:Unit .
+
+odlm:businessFormula a owl:DatatypeProperty ;
+    rdfs:label "业务口径"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range xsd:string .
+
+
+
+# 关联表
+odlm:sourceTable a owl:ObjectProperty ;
+    rdfs:label "关联模型（表）"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:Table .
+
+# 计量字段
+odlm:measureField a owl:ObjectProperty ;
+    rdfs:label "计量字段"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:Field .
+
+# 计量方式
+odlm:measureMethod a owl:ObjectProperty ;
+    rdfs:label "计量方式"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:MeasureMethod .
+
+# 日期维度
+odlm:dateDimension a owl:ObjectProperty ;
+    rdfs:label "日期维度"@zh ;
+    rdfs:domain odlm:AtomicMetric ; rdfs:range odlm:Dimension .
+
+##################################
+#  枚举类占位（后续补充实例）
+##################################
+odlm:MetricCatalog  a owl:Class ; rdfs:label "指标目录字典"@zh .
+odlm:Unit           a owl:Class ; rdfs:label "度量单位字典"@zh .
+odlm:MeasureMethod  a owl:Class ; rdfs:label "计量方式字典"@zh .
+
+##################################
+#  派生指标类
+##################################
+odlm:DerivedMetric a owl:Class ;
+    rdfs:subClassOf odlm:Metric ;
+    rdfs:label "派生指标"@zh ;
+    dcterms:description "基于原子指标、维度与限定条件计算得到的复合度量"@zh .
+
+# ---------- 基本属性 ----------
+odlm:derivedMetricId a owl:DatatypeProperty ;
+    rdfs:label "派生指标ID"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range xsd:string .
+
+odlm:belongsToCatalog a owl:ObjectProperty ;
+    rdfs:label "所属目录"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:MetricCatalog .
+
+odlm:createdBy a owl:ObjectProperty ;
+    rdfs:label "创建人"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:User .
+
+odlm:createdTime a owl:DatatypeProperty ;
+    rdfs:label "创建时间"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range xsd:dateTime .
+
+#odlm:publishStatus a owl:ObjectProperty ;
+#    rdfs:label "发布状态"@zh ;
+#    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:PublishStatus .
+
+odlm:storageType a owl:ObjectProperty ;
+    rdfs:label "存储类型"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:StorageType .
+
+odlm:businessFormula a owl:DatatypeProperty ;
+    rdfs:label "业务口径"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range xsd:string .
+
+
+
+# ---------- 关联关系 ----------
+odlm:unit a owl:ObjectProperty ;
+    rdfs:label "度量单位"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:Unit .
+
+odlm:derivedDimension a owl:ObjectProperty ;
+    rdfs:label "派生维度"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:Dimension .
+
+odlm:timeDimension a owl:ObjectProperty ;
+    rdfs:label "时间维度"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:Dimension .
+
+odlm:statPeriod a owl:ObjectProperty ;
+    rdfs:label "统计周期"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:StatPeriod .
+
+odlm:appliedQualifier a owl:ObjectProperty ;
+    rdfs:label "业务限定"@zh ;
+    rdfs:domain odlm:DerivedMetric ; rdfs:range odlm:BusinessQualifier .
+
+##################################
+#  枚举类占位
+##################################
+odlm:StorageType a owl:Class ; rdfs:label "存储类型字典"@zh .
+odlm:StatPeriod  a owl:Class ; rdfs:label "统计周期字典"@zh .
+
+#########################################################
+# API 服务子类及枚举
+#########################################################
+
+odlm:APIService a owl:Class ;
+    rdfs:subClassOf odlm:Service ;
+    rdfs:label "API 服务"@zh ;
+    dcterms:description "以 REST/SQL 形式对外暴露的查询服务"@zh .
+
+odlm:serviceAuthTeam a owl:ObjectProperty ;
+    rdfs:label "团队可访问服务"@zh ;
+    rdfs:domain odlm:Service ; 
+    rdfs:range odlm:Team .
+# --------------- 枚举值 ---------------
+
+# 请求方法
+odlm:RequestMethod a owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label "请求方法枚举"@zh .
+
+odlm:GET     a odlm:RequestMethod ; rdfs:label "GET" .
+odlm:POST    a odlm:RequestMethod ; rdfs:label "POST" .
+odlm:PUT     a odlm:RequestMethod ; rdfs:label "PUT" .
+odlm:DELETE  a odlm:RequestMethod ; rdfs:label "DELETE" .
+odlm:PATCH   a odlm:RequestMethod ; rdfs:label "PATCH" .
+
+# 调用类型
+odlm:CallType a owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label "调用类型枚举"@zh .
+
+odlm:Synchronous  a odlm:CallType ; rdfs:label "同步" .
+odlm:Asynchronous a odlm:CallType ; rdfs:label "异步" .
+
+# 状态
+odlm:ServiceStatus a owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label "服务状态枚举"@zh .
+
+odlm:Developing  a odlm:ServiceStatus ; rdfs:label "开发" .
+odlm:Published   a odlm:ServiceStatus ; rdfs:label "发布" .
+odlm:Deprecated  a odlm:ServiceStatus ; rdfs:label "失效" .
+
+# 开放等级
+odlm:AccessLevel a owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label "开放等级枚举"@zh .
+
+odlm:QuickAccess   a odlm:AccessLevel ; rdfs:label "快捷开放" .
+odlm:StrictControl a odlm:AccessLevel ; rdfs:label "严控开放" .
+
+# Content-Type
+odlm:ContentType a owl:Class ;
+    rdfs:subClassOf owl:Thing ;
+    rdfs:label "Content-Type 枚举"@zh .
+
+odlm:JSON a odlm:ContentType ; rdfs:label "application/json" .
+odlm:CSV  a odlm:ContentType ; rdfs:label "text/csv" .
+odlm:XML  a odlm:ContentType ; rdfs:label "application/xml" .
+
+#########################################################
+# 属性（Data Properties & Object Properties）
+#########################################################
+
+# 0. API服务ID
+odlm:apiServiceId a owl:DatatypeProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  xsd:string ;
+    rdfs:label "API服务ID"@zh .
+
+# 1. 访问地址
+odlm:apiEndpoint a owl:DatatypeProperty ;
+    rdfs:subPropertyOf dcat:endpointURL ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  xsd:string ;
+    rdfs:label "访问地址"@zh .
+
+# 2. 请求方法
+odlm:hasRequestMethod a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:RequestMethod ;
+    rdfs:label "请求方法"@zh .
+
+# 3. 调用类型
+odlm:hasCallType a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:CallType ;
+    rdfs:label "调用类型"@zh .
+
+# 4. 状态
+odlm:hasStatus a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:ServiceStatus ;
+    rdfs:label "状态"@zh .
+
+# 5. 开放等级
+odlm:hasAccessLevel a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:AccessLevel ;
+    rdfs:label "开放等级"@zh .
+
+# 6. 负责人（指向用户）
+odlm:hasOwner a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:User ;
+    rdfs:label "负责人"@zh .
+
+# 7. 创建时间
+odlm:createdAt a owl:DatatypeProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  xsd:dateTime ;
+    rdfs:label "创建时间"@zh .
+
+# 8. Content-Type
+odlm:contentType a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:ContentType ;
+    rdfs:label "Content-Type"@zh .
+
+# 9. 运行态集群（指向集群实例）
+odlm:runsOn a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:Cluster ;
+    rdfs:label "运行态集群"@zh .
+
+# 10. 业务详述
+odlm:businessDescription a owl:DatatypeProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  xsd:string ;
+    rdfs:label "业务详述"@zh .
+
+# 11. SQL 查询
+odlm:sqlQuery a owl:DatatypeProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  xsd:string ;
+    rdfs:label "SQL 语句"@zh .
+
+# 12. 订阅人（指向用户）
+odlm:hasSubscriber a owl:ObjectProperty ;
+    rdfs:domain odlm:APIService ;
+    rdfs:range  odlm:User ;
+    rdfs:label "订阅人"@zh .
+
+#################################
+# UPDATED INSTANCES FOR DATA LINEAGE CHAIN
+#################################
+
+########################################
+# 1. Source Data Sources & Tables
+########################################
+ex:sales_mysql a odlm:MySQL ;
+    odlm:dataSourceId "sales_mysql" ;
+    odlm:alias       "销售库 MySQL" ;
+    odlm:jdbcUrl     "jdbc:mysql://10.0.0.21:3306/sales" ;
+    odlm:userName    "sales_user" ;
+    odlm:password    "123456" ;
+    odlm:belongsToTeam ex:team_sales ;
+    odlm:belongsToCluster ex:cluster_prod;
+    dcterms:description "销售业务源系统数据库" .
+
+# Source customer table
+ex:t_customer a odlm:Table ;
+    odlm:tableId              "t_customer" ;
+    odlm:alias           "客户表" ;
+    odlm:belongsToDataSource ex:sales_mysql ;
+    odlm:belongsToTeam   ex:team_sales ;
+    odlm:tableCycle           ex:cycle_daily ;
+    odlm:layer           ex:layer_ods ;
+    odlm:owner           ex:user_wang ;
+    odlm:rowCount        "1,200,345" ;
+    odlm:totalSize       "128 MB" ;
+    odlm:updateTime      "2024-07-29T09:00:00Z"^^xsd:dateTime ;
+    odlm:tableBelongsToWorkspace ex:test_workspace .
+    
+
+# Source order table  
+ex:t_order a odlm:Table ;
+    odlm:tableId              "t_order" ;
+    odlm:alias           "订单表" ;
+    odlm:belongsToDataSource ex:sales_mysql ;
+    odlm:belongsToTeam   ex:team_sales ;
+    odlm:tableCycle           ex:cycle_daily ;
+    odlm:layer           ex:layer_ods ;
+    odlm:owner           ex:user_li ;
+    odlm:rowCount        "3,567,890" ;
+    odlm:totalSize       "512 MB" ;
+    odlm:updateTime      "2024-07-29T09:00:00Z"^^xsd:dateTime ;
+    odlm:tableBelongsToWorkspace ex:test_workspace .
+
+########################################
+# 2. Source Table Fields
+########################################
+# Customer table fields
+ex:f_customer_id a odlm:Field ;
+    odlm:fieldId            "customer_id" ;
+    odlm:alias         "客户ID" ;
+    odlm:fieldType     ex:type_bigint ;
+    odlm:isPrimaryKey  true ;
+    odlm:isNullable    false ;
+    odlm:description   "客户唯一主键" ;
+    odlm:belongsToTable ex:t_customer .
+
+ex:f_customer_name a odlm:Field ;
+    odlm:fieldId            "customer_name" ;
+    odlm:alias         "客户名称" ;
+    odlm:fieldType     ex:type_string ;
+    odlm:length        "100" ;
+    odlm:isNullable    false ;
+    odlm:belongsToTable ex:t_customer .
+
+ex:f_gender a odlm:Field ;
+    odlm:fieldId            "gender" ;
+    odlm:alias         "性别" ;
+    odlm:fieldType     ex:type_string ;
+    odlm:length        "10" ;
+    odlm:isNullable    true ;
+    odlm:belongsToTable ex:t_customer .
+
+ex:f_register_date a odlm:Field ;
+    odlm:fieldId            "register_date" ;
+    odlm:alias         "注册日期" ;
+    odlm:fieldType     ex:type_date ;
+    odlm:isNullable    false ;
+    odlm:isDimension   true ;
+    odlm:belongsToTable ex:t_customer .
+
+# Order table fields
+ex:f_order_id a odlm:Field ;
+    odlm:fieldId            "order_id" ;
+    odlm:alias         "订单号" ;
+    odlm:fieldType     ex:type_string ;
+    odlm:length        "64" ;
+    odlm:isPrimaryKey  true ;
+    odlm:isNullable    false ;
+    odlm:belongsToTable ex:t_order .
+
+ex:f_customer_id_fk a odlm:Field ;
+    odlm:fieldId            "customer_id" ;
+    odlm:alias         "客户ID" ;
+    odlm:fieldType     ex:type_bigint ;
+    odlm:isNullable    false ;
+    odlm:description   "外键指向客户表" ;
+    odlm:references    ex:f_customer_id ;
+    odlm:belongsToTable ex:t_order .
+
+ex:f_order_amount a odlm:Field ;
+    odlm:fieldId            "order_amount" ;
+    odlm:alias         "订单金额" ;
+    odlm:fieldType     ex:type_decimal ;
+    odlm:precision     "18,2" ;
+    odlm:isNullable    false ;
+    odlm:isMeasure     true ;
+    odlm:belongsToTable ex:t_order .
+
+ex:f_order_date a odlm:Field ;
+    odlm:fieldId            "order_date" ;
+    odlm:alias         "订单日期" ;
+    odlm:fieldType     ex:type_date ;
+    odlm:isNullable    false ;
+    odlm:isDimension   true ;
+    odlm:belongsToTable ex:t_order .
+
+########################################
+# 3. Target Hive Data Source
+########################################
+ex:hive_dw a odlm:Hive ;
+    odlm:dataSourceId "hive_dw" ;
+    odlm:alias "Hive数据仓库" ;
+    odlm:jdbcUrl "jdbc:hive2://hive-server:10000/dw" ;
+    odlm:executionEngine ex:engine_spark ;
+    odlm:belongsToCluster ex:cluster_prod ;
+    odlm:queueName "default" ;
+    odlm:belongsToTeam ex:team_bi .
+
+########################################
+# 4. ETL Task - Creates Clear Lineage
+########################################
+ex:task_customer_summary_etl a odlm:Task ;
+    odlm:taskId "customer_summary_etl" ;
+    odlm:alias "客户汇总ETL任务" ;
+    odlm:taskPurpose ex:purpose_etl ;
+    odlm:executionMode ex:mode_offline ;
+    odlm:devMode ex:dev_sparksql ;
+    odlm:taskCycle ex:cycle_daily ;
+    odlm:taskBelongsToWorkspace ex:bi_workspace ;
+    odlm:owner ex:user_zhang ;
+    odlm:publishStatus ex:status_published ;
+    odlm:version "v1.0" ;
+    odlm:updateTime "2024-07-29T10:00:00Z"^^xsd:dateTime ;
+    # PROV-O lineage relationships
+    odlm:used ex:t_customer, ex:t_order ;
+    odlm:generated ex:dws_customer_summary ;
+    prov:wasAttributedTo ex:user_zhang ; 
+    prov:wasAssociatedWith ex:engine_spark .
+    
+
+########################################
+# 5. Target Summary Table in Hive
+########################################
+ex:dws_customer_summary a odlm:HiveTable ;
+    odlm:hiveTableId "dws_customer_summary" ;
+    odlm:alias "客户汇总表" ;
+    odlm:belongsToDataSource ex:hive_dw ;
+    odlm:belongsToTeam ex:team_bi ;
+    odlm:tableBelongsToWorkspace ex:bi_workspace ;
+    odlm:tableCycle ex:cycle_daily ;
+    odlm:layer ex:layer_dws ;
+    odlm:owner ex:user_zhang ;
+    odlm:rowCount "1,200,345" ;
+    odlm:totalSize "256 MB" ;
+    odlm:updateTime "2024-07-29T10:00:00Z"^^xsd:dateTime ;
+    odlm:isPartitioned true ;
+    odlm:isExternal false ;
+    odlm:fileFormat ex:format_orc ;
+    odlm:compressionType ex:compress_snappy ;
+    odlm:hdfsPath "/warehouse/dws/dws_customer_summary" ;
+    # odlm:hasField ex:f_summary_customer_id, ex:f_summary_customer_name, ex:f_total_order_amount, ex:f_order_count, ex:f_stat_date ;
+    # PROV-O lineage
+    prov:wasDerivedFrom ex:t_customer, ex:t_order ;
+    odlm:wasGeneratedBy ex:task_customer_summary_etl .
+
+# Summary table fields
+ex:f_summary_customer_id a odlm:HiveField ;
+    odlm:fieldId            "customer_id" ;
+    odlm:alias         "客户ID" ;
+    odlm:fieldType     ex:type_bigint ;
+    odlm:isPrimaryKey  true ;
+    odlm:isNullable    false ;
+    odlm:belongsToTable ex:dws_customer_summary ;
+    prov:wasDerivedFrom ex:f_customer_id .
+
+ex:f_summary_customer_name a odlm:HiveField ;
+    odlm:fieldId            "customer_name" ;
+    odlm:alias         "客户名称" ;
+    odlm:fieldType     ex:type_string ;
+    odlm:length        "100" ;
+    odlm:isNullable    false ;
+    odlm:belongsToTable ex:dws_customer_summary ;
+    prov:wasDerivedFrom ex:f_customer_name .
+
+ex:f_total_order_amount a odlm:HiveField ;
+    odlm:fieldId            "total_order_amount" ;
+    odlm:alias         "客户订单总金额" ;
+    odlm:fieldType     ex:type_decimal ;
+    odlm:precision     "18,2" ;
+    odlm:isNullable    false ;
+    odlm:isMeasure     true ;
+    odlm:belongsToTable ex:dws_customer_summary ;
+    prov:wasDerivedFrom ex:f_order_amount .
+
+ex:f_order_count a odlm:HiveField ;
+    odlm:fieldId            "order_count" ;
+    odlm:alias         "订单数量" ;
+    odlm:fieldType     ex:type_bigint ;
+    odlm:isNullable    false ;
+    odlm:isMeasure     true ;
+    odlm:belongsToTable ex:dws_customer_summary .
+
+ex:f_stat_date a odlm:HiveField ;
+    odlm:fieldId            "stat_date" ;
+    odlm:alias         "统计日期" ;
+    odlm:fieldType     ex:type_date ;
+    odlm:isNullable    false ;
+    odlm:isDimension   true ;
+    odlm:partitionKey  ex:partition_date ;
+    odlm:belongsToTable ex:dws_customer_summary ;
+    prov:wasDerivedFrom ex:f_order_date .
+
+########################################
+# 6. Dimension Table and Dimension
+########################################
+ex:dim_date_table a odlm:HiveTable ;
+    odlm:hiveTableId "dim_date_table" ;
+    odlm:alias "日期维度表" ;
+    odlm:belongsToDataSource ex:hive_dw ;
+    odlm:belongsToTeam ex:team_bi ;
+    odlm:layer ex:layer_dim ;
+    odlm:tableBelongsToWorkspace ex:bi_workspace .
+    # odlm:hasField ex:f_dim_date_key, ex:f_dim_year, ex:f_dim_month, ex:f_dim_day .
+
+ex:f_dim_date_key a odlm:HiveField ;
+    odlm:hiveFieldId            "date_key" ;
+    odlm:alias         "日期键" ;
+    odlm:fieldType     ex:type_date ;
+    odlm:isPrimaryKey  true ;
+    odlm:belongsToTable ex:dim_date_table .
+
+ex:f_dim_year a odlm:HiveField ;
+    odlm:hiveFieldId            "year" ;
+    odlm:alias         "年份" ;
+    odlm:fieldType     ex:type_int ;
+    odlm:belongsToTable ex:dim_date_table .
+
+ex:f_dim_month a odlm:HiveField ;
+    odlm:hiveFieldId            "month" ;
+    odlm:alias         "月份" ;
+    odlm:fieldType     ex:type_int ;
+    odlm:belongsToTable ex:dim_date_table .
+
+ex:f_dim_day a odlm:HiveField ;
+    odlm:hiveFieldId            "day" ;
+    odlm:alias         "日" ;
+    odlm:fieldType     ex:type_int ;
+    odlm:belongsToTable ex:dim_date_table .
+
+# Date Dimension
+ex:dim_date a odlm:Dimension ;
+    odlm:dimensionId "dim_date" ;
+    odlm:alias "日期维度" ;
+    odlm:description "日期分析维度，支持年月日钻取" ;
+    odlm:dimensionTable ex:dim_date_table ;
+    odlm:attributeCount 4 ;
+    odlm:hasAttribute ex:attr_year, ex:attr_month, ex:attr_day ;
+    odlm:lastUpdateBy ex:user_bi ;
+    odlm:lastUpdateTime "2024-07-29T09:00:00Z"^^xsd:dateTime .
+
+# Dimension Attributes
+ex:attr_year a odlm:DimensionAttribute ;
+    odlm:attrId "year_attr" ;
+    odlm:attrName "年份属性" ;
+    odlm:attrDesc "按年份分组分析" ;
+    odlm:dimensionField ex:f_dim_year ;
+    odlm:belongsToDimension ex:dim_date .
+
+ex:attr_month a odlm:DimensionAttribute ;
+    odlm:attrId "month_attr" ;
+    odlm:attrName "月份属性" ;
+    odlm:attrDesc "按月份分组分析" ;
+    odlm:dimensionField ex:f_dim_month ;
+    odlm:belongsToDimension ex:dim_date .
+
+ex:attr_day a odlm:DimensionAttribute ;
+    odlm:attrId "day_attr" ;
+    odlm:attrName "日属性" ;
+    odlm:attrDesc "按日分组分析" ;
+    odlm:dimensionField ex:f_dim_day ;
+    odlm:belongsToDimension ex:dim_date .
+
+########################################
+# 7. Atomic Metrics Based on Summary Table
+########################################
+ex:metric_total_amount a odlm:AtomicMetric ;
+    odlm:atomicMetricId "total_amount" ;
+    odlm:alias "客户订单总金额" ;
+    odlm:belongsToCatalog ex:catalog_sales ;
+    odlm:createdBy ex:user_analyst ;
+    odlm:createdTime "2024-07-29T11:00:00Z"^^xsd:dateTime ;
+    odlm:publishStatus ex:status_published ;
+    odlm:businessFormula "sum(total_order_amount)" ;
+    odlm:description "客户累计订单金额" ;
+    odlm:sourceTable ex:dws_customer_summary ;
+    odlm:measureField ex:f_total_order_amount ;
+    odlm:measureMethod ex:method_sum ;
+    odlm:dateDimension ex:dim_date ;
+    odlm:unit ex:unit_yuan ;
+    # PROV-O lineage
+    prov:wasDerivedFrom ex:dws_customer_summary .
+
+ex:metric_customer_count a odlm:AtomicMetric ;
+    odlm:atomicMetricId "customer_count" ;
+    odlm:alias "客户数量" ;
+    odlm:belongsToCatalog ex:catalog_sales ;
+    odlm:createdBy ex:user_analyst ;
+    odlm:createdTime "2024-07-29T11:15:00Z"^^xsd:dateTime ;
+    odlm:publishStatus ex:status_published ;
+    odlm:businessFormula "count(distinct customer_id)" ;
+    odlm:description "去重客户总数" ;
+    odlm:sourceTable ex:dws_customer_summary ;
+    odlm:measureField ex:f_summary_customer_id ;
+    odlm:measureMethod ex:method_count_distinct ;
+    odlm:dateDimension ex:dim_date ;
+    odlm:unit ex:unit_person ;
+    # PROV-O lineage
+    prov:wasDerivedFrom ex:dws_customer_summary .
+
+########################################
+# 8. Derived Metrics Based on Atomic Metrics
+########################################
+ex:metric_avg_amount_per_customer a odlm:DerivedMetric ;
+    odlm:derivedMetricId "avg_amount_per_customer" ;
+    odlm:alias "客户平均订单金额" ;
+    odlm:belongsToCatalog ex:catalog_sales ;
+    odlm:createdBy ex:user_analyst ;
+    odlm:createdTime "2024-07-29T11:30:00Z"^^xsd:dateTime ;
+    odlm:publishStatus ex:status_published ;
+    odlm:businessFormula "客户订单总金额 / 客户数量" ;
+    odlm:description "每个客户的平均订单金额" ;
+    odlm:storageType ex:storage_hive ;
+    odlm:unit ex:unit_yuan ;
+    odlm:derivedDimension ex:dim_date ;
+    odlm:timeDimension ex:dim_date ;
+    odlm:statPeriod ex:period_daily ;
+    # PROV-O lineage - derived from atomic metrics
+    prov:wasDerivedFrom ex:metric_total_amount, ex:metric_customer_count .
+
+########################################
+# 9. API Service Using Tables and Metrics
+########################################
+ex:api_customer_analytics a odlm:APIService ;
+    odlm:apiServiceId "customer_analytics_api" ;
+    odlm:alias "客户分析API服务" ;
+    odlm:apiEndpoint "https://api.company.com/v1/analytics/customer" ;
+    odlm:hasRequestMethod odlm:POST ;
+    odlm:hasCallType odlm:Synchronous ;
+    odlm:hasStatus odlm:Published ;
+    odlm:hasAccessLevel odlm:QuickAccess ;
+    odlm:hasOwner ex:user_api_owner ;
+    odlm:createdAt "2024-07-29T12:00:00Z"^^xsd:dateTime ;
+    odlm:contentType odlm:JSON ;
+    odlm:runsOn ex:cluster_prod ;
+    odlm:businessDescription "提供客户分析指标查询服务，包含客户总金额、客户数量、平均客单价等核心指标，支持按日期维度钻取分析" ;
+    odlm:sqlQuery """
+        SELECT 
+            cs.stat_date,
+            dd.year,
+            dd.month,
+            sum(cs.total_order_amount) as total_amount,
+            count(distinct cs.customer_id) as customer_count,
+            sum(cs.total_order_amount) / count(distinct cs.customer_id) as avg_amount_per_customer
+        FROM dws_customer_summary cs
+        JOIN dim_date_table dd ON cs.stat_date = dd.date_key
+        WHERE cs.stat_date BETWEEN '${start_date}' AND '${end_date}'
+        GROUP BY cs.stat_date, dd.year, dd.month
+        ORDER BY cs.stat_date
+    """ ;
+    odlm:hasSubscriber ex:user_business_analyst, ex:user_manager ;
+    # PROV-O lineage - uses tables and metrics
+    prov:used ex:dws_customer_summary, ex:dim_date_table, ex:metric_total_amount, ex:metric_customer_count, ex:metric_avg_amount_per_customer .
+
+########################################
+# 10. Supporting Entities and Enums
+########################################
+# Field Types
+ex:type_string   a odlm:FieldType ; rdfs:label "STRING" .
+ex:type_bigint   a odlm:FieldType ; rdfs:label "BIGINT" .
+ex:type_int      a odlm:FieldType ; rdfs:label "INT" .
+ex:type_date     a odlm:FieldType ; rdfs:label "DATE" .
+ex:type_datetime a odlm:FieldType ; rdfs:label "DATETIME" .
+ex:type_decimal  a odlm:FieldType ; rdfs:label "DECIMAL(18,2)" .
+
+# Users
+ex:user_wang         a odlm:User ; rdfs:label "王五" ; dcterms:description "数据开发工程师" .
+ex:user_li           a odlm:User ; rdfs:label "李四" ; dcterms:description "数据开发工程师" .
+ex:user_zhang        a odlm:User ; rdfs:label "张三" ; dcterms:description "ETL工程师" .
+ex:user_analyst      a odlm:User ; rdfs:label "数据分析师" ; dcterms:description "业务数据分析师" .
+ex:user_bi           a odlm:User ; rdfs:label "BI工程师" ; dcterms:description "BI开发工程师" .
+ex:user_api_owner    a odlm:User ; rdfs:label "API负责人" ; dcterms:description "API服务负责人" .
+ex:user_business_analyst a odlm:User ; rdfs:label "业务分析师" .
+ex:user_manager      a odlm:User ; rdfs:label "业务经理" .
+
+# Teams and Workspaces
+ex:team_sales    a odlm:Team ; rdfs:label "销售团队" .
+ex:team_bi       a odlm:Team ; rdfs:label "BI团队" .
+ex:bi_workspace  a odlm:Workspace ; rdfs:label "BI工作空间" .
+ex:test_workspace a odlm:Workspace ; rdfs:label "测试工作空间" .
+ex:team_bi       odlm:teamWorkWithSpace ex:bi_workspace .
+
+# Clusters and Engines
+ex:cluster_prod  a odlm:Cluster ; rdfs:label "生产集群" .
+ex:engine_spark  a odlm:Engine ; rdfs:label "Spark计算引擎" .
+
+# Data Layers and Cycles
+ex:layer_ods     a odlm:DataLayer ; rdfs:label "ODS 操作数据层" .
+ex:layer_dws     a odlm:DataLayer ; rdfs:label "DWS 汇总数据层" .
+ex:layer_dim     a odlm:DataLayer ; rdfs:label "DIM 维度数据层" .
+ex:cycle_daily   a odlm:UpdateCycle ; rdfs:label "日更新" .
+
+# Task and Metric Related Enums
+ex:purpose_etl        a odlm:TaskPurpose ; rdfs:label "ETL数据处理" .
+ex:mode_offline       a odlm:ExecutionMode ; rdfs:label "离线批处理" .
+ex:dev_sparksql       a odlm:DevMode ; rdfs:label "SparkSQL开发" .
+ex:status_published   a odlm:PublishStatus ; rdfs:label "已发布" .
+
+ex:catalog_sales      a odlm:MetricCatalog ; rdfs:label "销售分析指标目录" .
+ex:unit_yuan          a odlm:Unit ; rdfs:label "元" .
+ex:unit_person        a odlm:Unit ; rdfs:label "人" .
+ex:method_sum         a odlm:MeasureMethod ; rdfs:label "求和" .
+ex:method_count_distinct a odlm:MeasureMethod ; rdfs:label "去重计数" .
+ex:storage_hive       a odlm:StorageType ; rdfs:label "Hive存储" .
+ex:period_daily       a odlm:StatPeriod ; rdfs:label "按天统计" .
+
+# File Formats and Compression
+ex:format_orc         a odlm:FileFormat ; rdfs:label "ORC格式" .
+ex:compress_snappy    a odlm:CompressionType ; rdfs:label "Snappy压缩" .
+ex:partition_date     a odlm:PartitionKey ; rdfs:label "按日期分区" .

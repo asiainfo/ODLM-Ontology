@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ODLM_Vocabulary.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="odlm-%E6%9C%AC%E4%BD%93%E8%AF%8D%E6%B1%87%E8%A1%A8ontology-vocabulary">ODLM 本体词汇表（Ontology Vocabulary）</h2>
+<ul>
+<li><strong>版本</strong>: 1.0</li>
+<li><strong>命名空间（base IRI）</strong>: <code>http://asiainfo.com/odlm#</code></li>
+<li><strong>本体 IRI</strong>: <code>http://asiainfo.com/odlm</code></li>
+<li><strong>创建日期</strong>: 2025-08-28</li>
+<li><strong>简述</strong>: 定义数据生命周期管理（Data Lifecycle Management）的核心类、对象属性、数据属性与关键枚举，用于描述数据源、数据集、任务、指标、维度、标准、权限与服务等要素及其血缘关系与管理信息。</li>
+</ul>
+<h3 id="%E5%89%8D%E7%BC%80prefixes">前缀（Prefixes）</h3>
+<ul>
+<li><code>rdf</code>: <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></li>
+<li><code>rdfs</code>: <code>http://www.w3.org/2000/01/rdf-schema#</code></li>
+<li><code>owl</code>: <code>http://www.w3.org/2002/07/owl#</code></li>
+<li><code>xsd</code>: <code>http://www.w3.org/2001/XMLSchema#</code></li>
+<li><code>dcat</code>: <code>http://www.w3.org/ns/dcat#</code></li>
+<li><code>prov</code>: <code>http://www.w3.org/ns/prov#</code></li>
+<li><code>dcterms</code>: <code>http://purl.org/dc/terms/</code></li>
+<li><code>odlm</code>: <code>http://asiainfo.com/odlm#</code></li>
+<li><code>ex</code>: <code>http://asiainfo.com/odlm-instances#</code>（示例实例）</li>
+</ul>
+<hr>
+<h2 id="%E7%9B%AE%E5%BD%95">目录</h2>
+<ul>
+<li><a href="#odlm-%E6%9C%AC%E4%BD%93%E8%AF%8D%E6%B1%87%E8%A1%A8ontology-vocabulary">ODLM 本体词汇表（Ontology Vocabulary）</a>
+<ul>
+<li><a href="#%E5%89%8D%E7%BC%80prefixes">前缀（Prefixes）</a></li>
+</ul>
+</li>
+<li><a href="#%E7%9B%AE%E5%BD%95">目录</a></li>
+<li><a href="#%E6%A6%82%E8%A7%88%E4%B8%8E%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4">概览与适用范围</a></li>
+<li><a href="#%E7%B1%BBclasses">类（Classes）</a>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E4%B8%8E%E8%B5%84%E6%BA%90">核心与资源</a></li>
+<li><a href="#%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E4%B8%8E%E7%BB%84%E7%BB%87">基础设施与组织</a></li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%B1%A1">对象建模（领域对象）</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AD%90%E7%B1%BB">数据源子类</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%A1%A8%E5%AD%97%E6%AE%B5">数据集与表/字段</a></li>
+<li><a href="#%E6%8C%87%E6%A0%87%E4%B8%8E%E7%BB%B4%E5%BA%A6">指标与维度</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1">服务</a></li>
+<li><a href="#%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%AF%8D%E8%A1%A8">枚举类（词表）</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7object-properties">对象属性（Object Properties）</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%B1%9E%E6%80%A7datatype-properties">数据属性（Datatype Properties）</a></li>
+<li><a href="#%E5%91%BD%E5%90%8D%E4%B8%AA%E4%BD%93%E4%B8%8E%E6%9E%9A%E4%B8%BEnamed-individuals--enums">命名个体与枚举（Named Individuals &amp; Enums）</a>
+<ul>
+<li><a href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95odlmrequestmethod">请求方法（<code>odlm:RequestMethod</code>）</a></li>
+<li><a href="#%E8%B0%83%E7%94%A8%E7%B1%BB%E5%9E%8Bodlmcalltype">调用类型（<code>odlm:CallType</code>）</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81odlmservicestatus">服务状态（<code>odlm:ServiceStatus</code>）</a></li>
+<li><a href="#%E5%BC%80%E6%94%BE%E7%AD%89%E7%BA%A7odlmaccesslevel">开放等级（<code>odlm:AccessLevel</code>）</a></li>
+<li><a href="#content-typeodlmcontenttype">Content-Type（<code>odlm:ContentType</code>）</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BB%BA%E6%A8%A1%E7%BA%A6%E6%9D%9F%E4%B8%8E%E6%8E%A8%E7%90%86%E8%A7%84%E5%88%99axioms">建模约束与推理规则（Axioms）</a></li>
+<li><a href="#%E9%99%84%E5%BD%95%E7%A4%BA%E4%BE%8B%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8Eex">附录：示例实例说明（ex:）</a></li>
+<li><a href="#%E4%BF%AE%E8%AE%A2%E8%AE%B0%E5%BD%95">修订记录</a></li>
+</ul>
+<hr>
+<h2 id="%E6%A6%82%E8%A7%88%E4%B8%8E%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4">概览与适用范围</h2>
+<ul>
+<li><strong>目标</strong>: 提供统一的数据生命周期语义模型，覆盖数据源、表/字段、任务、指标、维度、标准与服务；支持血缘、治理、权限与发布状态管理。</li>
+<li><strong>对齐标准</strong>: 复用 <code>PROV-O</code>（<code>prov:Entity</code>/<code>prov:Activity</code>）、<code>DCAT</code>（数据集与服务）、<code>Dublin Core</code>（通用元数据）。</li>
+</ul>
+<hr>
+<h2 id="%E7%B1%BBclasses">类（Classes）</h2>
+<p>下表列出主要类，包含继承关系与中文标签。未显式给出描述的类省略描述列。</p>
+<h3 id="%E6%A0%B8%E5%BF%83%E4%B8%8E%E8%B5%84%E6%BA%90">核心与资源</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:Entity</code></td>
+<td>Entity</td>
+<td><code>prov:Entity</code></td>
+<td>实体</td>
+<td>与 PROV-O 对齐的通用实体上位类</td>
+</tr>
+<tr>
+<td><code>odlm:Activity</code></td>
+<td>Activity</td>
+<td><code>prov:Activity</code></td>
+<td>活动/任务</td>
+<td>与 PROV-O 对齐的活动/任务上位类</td>
+</tr>
+<tr>
+<td><code>odlm:Resource</code></td>
+<td>Resource</td>
+<td><code>odlm:Entity</code>, <code>dcterms:Resource</code></td>
+<td>资源</td>
+<td>基于 <code>dcterms:Resource</code> 的资源性实体上位类，用于统一管理与引用</td>
+</tr>
+<tr>
+<td><code>odlm:DataSource</code></td>
+<td>DataSource</td>
+<td><code>odlm:Resource</code>, <code>dcat:Catalog</code></td>
+<td>数据源</td>
+<td>原始数据的来源系统或存储位置</td>
+</tr>
+<tr>
+<td><code>odlm:Dataset</code></td>
+<td>Dataset</td>
+<td><code>dcat:Dataset</code>, <code>odlm:Resource</code></td>
+<td>数据集</td>
+<td>对齐 DCAT 的数据集实体，用于承载数据内容与元数据</td>
+</tr>
+<tr>
+<td><code>odlm:Service</code></td>
+<td>Service</td>
+<td><code>dcat:DataService</code>, <code>odlm:Resource</code></td>
+<td>服务</td>
+<td>对齐 DCAT 的数据服务，用于对外暴露数据访问能力</td>
+</tr>
+<tr>
+<td><code>odlm:Task</code></td>
+<td>Task</td>
+<td><code>odlm:Activity</code>, <code>odlm:Resource</code></td>
+<td>任务</td>
+<td>数据操作流程如 ETL、血缘解析等</td>
+</tr>
+<tr>
+<td><code>odlm:Dimension</code></td>
+<td>Dimension</td>
+<td><code>odlm:Resource</code></td>
+<td>维度</td>
+<td>用于分析指标的上下文属性</td>
+</tr>
+<tr>
+<td><code>odlm:Metric</code></td>
+<td>Metric</td>
+<td><code>odlm:Resource</code></td>
+<td>指标</td>
+<td>可量化的业务度量标准</td>
+</tr>
+<tr>
+<td><code>odlm:Standard</code></td>
+<td>Standard</td>
+<td><code>odlm:Entity</code></td>
+<td>标准</td>
+<td>系统中的标准体系，比如字段标准等</td>
+</tr>
+<tr>
+<td><code>odlm:Rule</code></td>
+<td>Rule</td>
+<td><code>odlm:Entity</code></td>
+<td>规则</td>
+<td>在系统中对不同实体起到特定规范作用的规则</td>
+</tr>
+<tr>
+<td><code>odlm:ruleTemplate</code></td>
+<td>ruleTemplate</td>
+<td><code>odlm:Entity</code></td>
+<td>规则模板</td>
+<td>一个规则模板可包含多个规则</td>
+</tr>
+<tr>
+<td><code>odlm:Log</code></td>
+<td>Log</td>
+<td><code>odlm:Entity</code></td>
+<td>日志</td>
+<td>系统流转、执行过程中产生的日志</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E4%B8%8E%E7%BB%84%E7%BB%87">基础设施与组织</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:Engine</code></td>
+<td>Engine</td>
+<td><code>prov:SoftwareAgent</code>, <code>odlm:Resource</code></td>
+<td>引擎</td>
+<td>数据处理执行引擎</td>
+</tr>
+<tr>
+<td><code>odlm:Cluster</code></td>
+<td>Cluster</td>
+<td><code>prov:Collection</code>, <code>odlm:Resource</code></td>
+<td>集群</td>
+<td>资源集合的计算环境</td>
+</tr>
+<tr>
+<td><code>odlm:Organization</code></td>
+<td>Organization</td>
+<td><code>prov:Organization</code></td>
+<td>组织</td>
+<td>与 PROV-O 对齐的组织实体上位类</td>
+</tr>
+<tr>
+<td><code>odlm:Department</code></td>
+<td>Department</td>
+<td><code>odlm:Organization</code></td>
+<td>部门</td>
+<td>组织内的部门</td>
+</tr>
+<tr>
+<td><code>odlm:Team</code></td>
+<td>Team</td>
+<td><code>odlm:Organization</code></td>
+<td>团队</td>
+<td>协作单元</td>
+</tr>
+<tr>
+<td><code>odlm:User</code></td>
+<td>User</td>
+<td><code>prov:Person</code></td>
+<td>用户</td>
+<td>与 PROV-O 对齐的人员实体，用于标识系统用户</td>
+</tr>
+<tr>
+<td><code>odlm:Role</code></td>
+<td>Role</td>
+<td><code>prov:Role</code></td>
+<td>角色</td>
+<td>与 PROV-O 对齐的角色实体，用于权限继承</td>
+</tr>
+<tr>
+<td><code>odlm:Permission</code></td>
+<td>Permission</td>
+<td><code>odlm:Entity</code></td>
+<td>权限</td>
+<td>与角色/用户关联的权限实体（见 <code>hasPermission</code>/<code>hasDirectPermission</code>）</td>
+</tr>
+<tr>
+<td><code>odlm:Workspace</code></td>
+<td>Workspace</td>
+<td><code>odlm:Organization</code></td>
+<td>工作空间</td>
+<td>组织类型，用于承载表/任务等实体的工作域（见 <code>tableBelongsToWorkspace</code>/<code>taskBelongsToWorkspace</code>）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1%E9%A2%86%E5%9F%9F%E5%AF%B9%E8%B1%A1">对象建模（领域对象）</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:Object</code></td>
+<td>Object</td>
+<td><code>odlm:Resource</code></td>
+<td>本体对象</td>
+<td>用户创建的本体对象，作为某物理表的语义映射</td>
+</tr>
+<tr>
+<td><code>odlm:ObjectField</code></td>
+<td>ObjectField</td>
+<td><code>odlm:Resource</code></td>
+<td>本体对象属性</td>
+<td>用户创建的本体对象属性/字段，对应某物理表中的字段</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AD%90%E7%B1%BB">数据源子类</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:KerberosSupport</code></td>
+<td>KerberosSupport</td>
+<td></td>
+<td>支持 Kerberos 的数据源</td>
+<td>表明数据源支持Kerberos</td>
+</tr>
+<tr>
+<td><code>odlm:MySQL</code></td>
+<td>MySQL</td>
+<td><code>odlm:DataSource</code></td>
+<td>MySQL 数据源</td>
+<td>基于 MySQL 的关系型数据源</td>
+</tr>
+<tr>
+<td><code>odlm:Hive</code></td>
+<td>Hive</td>
+<td><code>odlm:DataSource</code>, <code>odlm:KerberosSupport</code></td>
+<td>Hive 数据源</td>
+<td>Hadoop/Hive 数据仓库数据源</td>
+</tr>
+<tr>
+<td><code>odlm:HBase</code></td>
+<td>HBase</td>
+<td><code>odlm:DataSource</code>, <code>odlm:KerberosSupport</code></td>
+<td>HBase 数据源</td>
+<td>分布式列式存储</td>
+</tr>
+<tr>
+<td><code>odlm:Kafka</code></td>
+<td>Kafka</td>
+<td><code>odlm:DataSource</code>, <code>odlm:KerberosSupport</code></td>
+<td>Kafka 数据源</td>
+<td>消息队列</td>
+</tr>
+<tr>
+<td><code>odlm:MinIO</code></td>
+<td>MinIO</td>
+<td><code>odlm:DataSource</code></td>
+<td>MinIO 数据源</td>
+<td>兼容 S3 的对象存储</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E8%A1%A8%E5%AD%97%E6%AE%B5">数据集与表/字段</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:Schema</code></td>
+<td>Schema</td>
+<td><code>odlm:Dataset</code></td>
+<td>数据模型</td>
+<td>逻辑数据模型，包含一组相关的表和字段</td>
+</tr>
+<tr>
+<td><code>odlm:Table</code></td>
+<td>Table</td>
+<td><code>odlm:Dataset</code></td>
+<td>表</td>
+<td>逻辑或物理的数据表</td>
+</tr>
+<tr>
+<td><code>odlm:tableStandard</code></td>
+<td>tableStandard</td>
+<td><code>odlm:Standard</code></td>
+<td>表标准</td>
+<td>表标准实体，一个表标准可以映射多个表</td>
+</tr>
+<tr>
+<td><code>odlm:HiveTable</code></td>
+<td>HiveTable</td>
+<td><code>odlm:Table</code></td>
+<td>Hive 表</td>
+<td>存储在 Hive 中的表，拥有属于自己的一些独特属性</td>
+</tr>
+<tr>
+<td><code>odlm:Field</code></td>
+<td>Field</td>
+<td><code>odlm:Resource</code></td>
+<td>字段</td>
+<td>表中的列或字段</td>
+</tr>
+<tr>
+<td><code>odlm:fieldStandard</code></td>
+<td>fieldStandard</td>
+<td><code>odlm:Standard</code></td>
+<td>字段标准</td>
+<td>字段标准实体，一个字段标准可以映射多个字段</td>
+</tr>
+<tr>
+<td><code>odlm:HiveField</code></td>
+<td>HiveField</td>
+<td><code>odlm:Field</code></td>
+<td>Hive 字段</td>
+<td>Hive 表中的字段</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%8C%87%E6%A0%87%E4%B8%8E%E7%BB%B4%E5%BA%A6">指标与维度</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:DimensionAttribute</code></td>
+<td>DimensionAttribute</td>
+<td><code>odlm:Resource</code></td>
+<td>维度属性</td>
+<td>维度下的一个可分析字段</td>
+</tr>
+<tr>
+<td><code>odlm:BusinessQualifier</code></td>
+<td>BusinessQualifier</td>
+<td><code>odlm:Metric</code></td>
+<td>业务限定</td>
+<td>指标计算规则片段，通过 SQL 逻辑绑定到表与字段</td>
+</tr>
+<tr>
+<td><code>odlm:AtomicMetric</code></td>
+<td>AtomicMetric</td>
+<td><code>odlm:Metric</code></td>
+<td>原子指标</td>
+<td>不可再分的业务度量，基于单表单字段聚合</td>
+</tr>
+<tr>
+<td><code>odlm:DerivedMetric</code></td>
+<td>DerivedMetric</td>
+<td><code>odlm:Metric</code></td>
+<td>派生指标</td>
+<td>基于原子指标、维度与限定条件计算得到的复合度量</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%9C%8D%E5%8A%A1">服务</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>继承自</th>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:APIService</code></td>
+<td>APIService</td>
+<td><code>odlm:Service</code></td>
+<td>API 服务</td>
+<td>以 REST/SQL 形式对外暴露的查询服务</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E6%9E%9A%E4%B8%BE%E7%B1%BB%E8%AF%8D%E8%A1%A8">枚举类（词表）</h3>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>IRI 后缀</th>
+<th>标签</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:UpdateCycle</code></td>
+<td>UpdateCycle</td>
+<td>更新周期枚举</td>
+</tr>
+<tr>
+<td><code>odlm:DataLayer</code></td>
+<td>DataLayer</td>
+<td>数据层级枚举</td>
+</tr>
+<tr>
+<td><code>odlm:ChangeStatus</code></td>
+<td>ChangeStatus</td>
+<td>变更状态枚举</td>
+</tr>
+<tr>
+<td><code>odlm:PublishStatus</code></td>
+<td>PublishStatus</td>
+<td>发布状态枚举</td>
+</tr>
+<tr>
+<td><code>odlm:DataSourceType</code></td>
+<td>DataSourceType</td>
+<td>数据来源类型枚举</td>
+</tr>
+<tr>
+<td><code>odlm:FileFormat</code></td>
+<td>FileFormat</td>
+<td>文件格式枚举</td>
+</tr>
+<tr>
+<td><code>odlm:Delimiter</code></td>
+<td>Delimiter</td>
+<td>分隔符枚举</td>
+</tr>
+<tr>
+<td><code>odlm:CompressionType</code></td>
+<td>CompressionType</td>
+<td>压缩类型枚举</td>
+</tr>
+<tr>
+<td><code>odlm:FieldType</code></td>
+<td>FieldType</td>
+<td>字段类型枚举</td>
+</tr>
+<tr>
+<td><code>odlm:SecurityCategory</code></td>
+<td>SecurityCategory</td>
+<td>安全分类枚举</td>
+</tr>
+<tr>
+<td><code>odlm:SecurityLevel</code></td>
+<td>SecurityLevel</td>
+<td>安全分级枚举</td>
+</tr>
+<tr>
+<td><code>odlm:PartitionKey</code></td>
+<td>PartitionKey</td>
+<td>分区键枚举</td>
+</tr>
+<tr>
+<td><code>odlm:TaskPurpose</code></td>
+<td>TaskPurpose</td>
+<td>任务用途枚举</td>
+</tr>
+<tr>
+<td><code>odlm:ExecutionMode</code></td>
+<td>ExecutionMode</td>
+<td>执行模式枚举</td>
+</tr>
+<tr>
+<td><code>odlm:DevMode</code></td>
+<td>DevMode</td>
+<td>开发模式枚举</td>
+</tr>
+<tr>
+<td><code>odlm:ScheduleCycle</code></td>
+<td>ScheduleCycle</td>
+<td>调度周期枚举</td>
+</tr>
+<tr>
+<td><code>odlm:MetricCatalog</code></td>
+<td>MetricCatalog</td>
+<td>指标目录字典</td>
+</tr>
+<tr>
+<td><code>odlm:Unit</code></td>
+<td>Unit</td>
+<td>度量单位字典</td>
+</tr>
+<tr>
+<td><code>odlm:MeasureMethod</code></td>
+<td>MeasureMethod</td>
+<td>计量方式字典</td>
+</tr>
+<tr>
+<td><code>odlm:StorageType</code></td>
+<td>StorageType</td>
+<td>存储类型字典</td>
+</tr>
+<tr>
+<td><code>odlm:StatPeriod</code></td>
+<td>StatPeriod</td>
+<td>统计周期字典</td>
+</tr>
+<tr>
+<td><code>odlm:RequestMethod</code></td>
+<td>RequestMethod</td>
+<td>请求方法枚举</td>
+</tr>
+<tr>
+<td><code>odlm:CallType</code></td>
+<td>CallType</td>
+<td>调用类型枚举</td>
+</tr>
+<tr>
+<td><code>odlm:ServiceStatus</code></td>
+<td>ServiceStatus</td>
+<td>服务状态枚举</td>
+</tr>
+<tr>
+<td><code>odlm:AccessLevel</code></td>
+<td>AccessLevel</td>
+<td>开放等级枚举</td>
+</tr>
+<tr>
+<td><code>odlm:ContentType</code></td>
+<td>ContentType</td>
+<td>Content-Type 枚举</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7object-properties">对象属性（Object Properties）</h2>
+<p>以下表格列出主要对象属性，含域（Domain）、值域（Range）、子属性、逆属性与特性。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>标签</th>
+<th>Domain</th>
+<th>Range</th>
+<th>子属性于</th>
+<th>逆属性</th>
+<th>特性/规则</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:followStandard</code></td>
+<td>遵循标准</td>
+<td><code>odlm:Entity</code> 等</td>
+<td><code>odlm:Standard</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>某一实体遵循某一标准</td>
+</tr>
+<tr>
+<td><code>odlm:hasRule</code></td>
+<td>拥有规则</td>
+<td><code>odlm:Entity</code></td>
+<td><code>odlm:Rule</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>实体关联到其生效的规则集合</td>
+</tr>
+<tr>
+<td><code>odlm:appliesTo</code></td>
+<td>应用于</td>
+<td><code>odlm:Entity</code></td>
+<td><code>odlm:Entity</code></td>
+<td></td>
+<td><code>odlm:isAppliedBy</code></td>
+<td></td>
+<td>一个实体的作用目标实体</td>
+</tr>
+<tr>
+<td><code>odlm:isAppliedBy</code></td>
+<td>被应用于</td>
+<td><code>odlm:Entity</code></td>
+<td><code>odlm:Entity</code></td>
+<td></td>
+<td><code>odlm:appliesTo</code></td>
+<td>逆属性</td>
+<td>某实体被另一实体应用（与 appliesTo 互逆）</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToRuleTemp</code></td>
+<td>所属规则模板</td>
+<td><code>odlm:Rule</code></td>
+<td><code>odlm:ruleTemplate</code></td>
+<td><code>dcterms:isPartOf</code></td>
+<td></td>
+<td></td>
+<td>规则归属的模板</td>
+</tr>
+<tr>
+<td><code>odlm:logGeneratedBy</code></td>
+<td>由某activity生成的日志</td>
+<td><code>odlm:Log</code></td>
+<td><code>odlm:Activity</code></td>
+<td><code>odlm:wasGeneratedBy</code></td>
+<td></td>
+<td></td>
+<td>将日志与生成它的活动建立关联</td>
+</tr>
+<tr>
+<td><code>odlm:linkedWith</code></td>
+<td>关联关系</td>
+<td><code>odlm:Entity</code></td>
+<td><code>odlm:Entity</code></td>
+<td></td>
+<td></td>
+<td>对称（Symmetric）</td>
+<td>两个实体之间存在非定向的关联关系</td>
+</tr>
+<tr>
+<td><code>odlm:hasPermission</code></td>
+<td>角色拥有权限</td>
+<td><code>odlm:Role</code></td>
+<td><code>odlm:Permission</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指定角色具备的权限集合</td>
+</tr>
+<tr>
+<td><code>odlm:hasRole</code></td>
+<td>一个用户拥有的角色</td>
+<td><code>odlm:User</code></td>
+<td><code>odlm:Role</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指定用户被授予的角色</td>
+</tr>
+<tr>
+<td><code>odlm:hasDirectPermission</code></td>
+<td>用户通过角色继承到的权限</td>
+<td><code>odlm:User</code></td>
+<td><code>odlm:Permission</code></td>
+<td>链（<code>hasRole ∘ hasPermission</code>）</td>
+<td></td>
+<td></td>
+<td>通过角色—权限链获得的用户权限</td>
+</tr>
+<tr>
+<td><code>odlm:delegatedBy</code></td>
+<td>团队授权用户</td>
+<td><code>odlm:User</code></td>
+<td><code>odlm:Team</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表示用户由某团队授权委派</td>
+</tr>
+<tr>
+<td><code>odlm:teamWorkWithSpace</code></td>
+<td>团队在空间下工作</td>
+<td><code>odlm:Team</code></td>
+<td><code>odlm:Workspace</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>团队所属/工作的工作空间</td>
+</tr>
+<tr>
+<td><code>odlm:userWorkWithSpace</code></td>
+<td>用户在空间下工作</td>
+<td><code>odlm:User</code></td>
+<td><code>odlm:Workspace</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>用户所属/工作的工作空间</td>
+</tr>
+<tr>
+<td><code>odlm:servesDataset</code></td>
+<td>服务服务于数据集</td>
+<td><code>odlm:Service</code></td>
+<td><code>odlm:Dataset</code></td>
+<td><code>dcat:servesDataset</code></td>
+<td></td>
+<td></td>
+<td>服务面向的数据集</td>
+</tr>
+<tr>
+<td><code>odlm:objectOwner</code></td>
+<td>对象负责人</td>
+<td><code>odlm:Object</code></td>
+<td><code>odlm:User</code></td>
+<td><code>odlm:owner</code></td>
+<td></td>
+<td></td>
+<td>本体对象的负责人</td>
+</tr>
+<tr>
+<td><code>odlm:objectCreatedFrom</code></td>
+<td>对象创建来源</td>
+<td><code>odlm:Object</code></td>
+<td><code>odlm:Table</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>本体对象来源的底层表</td>
+</tr>
+<tr>
+<td><code>odlm:isObjectFieldOf</code></td>
+<td>对象类型字段来自对象</td>
+<td><code>odlm:ObjectField</code></td>
+<td><code>odlm:Object</code></td>
+<td><code>dcterms:isPartOf</code></td>
+<td></td>
+<td></td>
+<td>指明对象字段属于哪个对象</td>
+</tr>
+<tr>
+<td><code>odlm:isObjectFieldFrom</code></td>
+<td>对象类型字段映射的源表字段</td>
+<td><code>odlm:ObjectField</code></td>
+<td><code>odlm:Field</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指明对象字段绑定的底层物理字段</td>
+</tr>
+<tr>
+<td><code>odlm:generated</code></td>
+<td>某个Activity生成了某个Entity</td>
+<td><code>odlm:Activity</code></td>
+<td><code>odlm:Entity</code></td>
+<td><code>prov:generated</code></td>
+<td></td>
+<td></td>
+<td>活动的输出实体</td>
+</tr>
+<tr>
+<td><code>odlm:wasGeneratedBy</code></td>
+<td>Entity由某个Activity生成</td>
+<td><code>odlm:Entity</code></td>
+<td><code>odlm:Activity</code></td>
+<td><code>prov:wasGeneratedBy</code></td>
+<td></td>
+<td></td>
+<td>实体的生成来源活动</td>
+</tr>
+<tr>
+<td><code>odlm:used</code></td>
+<td>某个Activity使用了某些Entity</td>
+<td><code>odlm:Activity</code></td>
+<td><code>odlm:Entity</code></td>
+<td><code>prov:used</code></td>
+<td></td>
+<td></td>
+<td>活动的输入实体</td>
+</tr>
+<tr>
+<td><code>odlm:containsTable</code></td>
+<td>包含表</td>
+<td><code>odlm:Schema</code></td>
+<td><code>odlm:Table</code></td>
+<td><code>dcterms:hasPart</code></td>
+<td><code>odlm:belongsToSchema</code></td>
+<td></td>
+<td>数据模型包含的表</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToTable</code></td>
+<td>所属表</td>
+<td><code>odlm:Field</code></td>
+<td><code>odlm:Table</code></td>
+<td><code>dcterms:isPartOf</code></td>
+<td><code>odlm:hasField</code></td>
+<td></td>
+<td>字段所属的表</td>
+</tr>
+<tr>
+<td><code>odlm:hasField</code></td>
+<td>包含字段</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:Field</code></td>
+<td><code>dcterms:hasPart</code></td>
+<td><code>odlm:belongsToTable</code></td>
+<td></td>
+<td>表包含的字段集合</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToSchema</code></td>
+<td>所属数据模型</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:Schema</code></td>
+<td><code>dcterms:isPartOf</code></td>
+<td><code>odlm:containsTable</code></td>
+<td></td>
+<td>表所属的数据模型</td>
+</tr>
+<tr>
+<td><code>odlm:relatedSchema</code></td>
+<td>关联数据模型</td>
+<td><code>odlm:Schema</code></td>
+<td><code>odlm:Schema</code></td>
+<td></td>
+<td></td>
+<td>链（<code>containsTable ∘ dependsOn ∘ belongsToSchema</code>）</td>
+<td>基于表依赖推导的数据模型间关联（对称）</td>
+</tr>
+<tr>
+<td><code>odlm:tableFollowStandard</code></td>
+<td>表遵循某一标准</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:tableStandard</code></td>
+<td><code>odlm:followStandard</code></td>
+<td></td>
+<td></td>
+<td>表遵循的表标准</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToDataSource</code></td>
+<td>所属数据源</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:DataSource</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表关联的数据源</td>
+</tr>
+<tr>
+<td><code>odlm:tableCycle</code></td>
+<td>表周期</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:UpdateCycle</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表的更新周期（如日/周/月）</td>
+</tr>
+<tr>
+<td><code>odlm:layer</code></td>
+<td>层级</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:DataLayer</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表所在的数据层级</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToTeam</code></td>
+<td>所属团队</td>
+<td><code>odlm:Table</code>/<code>odlm:User</code>/<code>odlm:DataSource</code></td>
+<td><code>odlm:Team</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>实体所属团队</td>
+</tr>
+<tr>
+<td><code>odlm:tableBelongsToWorkspace</code></td>
+<td>所属工作空间</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:Workspace</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表所在的工作空间</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToCluster</code></td>
+<td>所属集群</td>
+<td><code>odlm:Table</code>/<code>odlm:DataSource</code></td>
+<td><code>odlm:Cluster</code></td>
+<td></td>
+<td></td>
+<td>链（<code>belongsToDataSource ∘ belongsToCluster</code>）</td>
+<td>表继承数据源的集群归属</td>
+</tr>
+<tr>
+<td><code>odlm:owner</code></td>
+<td>负责人</td>
+<td><code>odlm:Table</code>/<code>odlm:Task</code>/<code>odlm:Standard</code></td>
+<td><code>odlm:User</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表/任务/标准的负责人</td>
+</tr>
+<tr>
+<td><code>odlm:changeStatus</code></td>
+<td>变更状态</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:ChangeStatus</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表的变更状态（变更/审核中/未变更）</td>
+</tr>
+<tr>
+<td><code>odlm:publishStatus</code></td>
+<td>发布状态</td>
+<td><code>odlm:Table</code>/<code>odlm:Task</code>/<code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>odlm:PublishStatus</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>发布状态（已发布/未发布/待审）</td>
+</tr>
+<tr>
+<td><code>odlm:dataSourceType</code></td>
+<td>数据来源</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:DataSourceType</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表的数据来源类型（采集/模型开发）</td>
+</tr>
+<tr>
+<td><code>odlm:sourceSystem</code></td>
+<td>来源系统</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:System</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>表来源的外部系统</td>
+</tr>
+<tr>
+<td><code>odlm:references</code></td>
+<td>引用字段</td>
+<td><code>odlm:Field</code></td>
+<td><code>odlm:Field</code></td>
+<td></td>
+<td></td>
+<td>传递（Transitive）</td>
+<td>字段间外键/引用关系（可传递）</td>
+</tr>
+<tr>
+<td><code>odlm:dependsOn</code></td>
+<td>表依赖</td>
+<td><code>odlm:Table</code></td>
+<td><code>odlm:Table</code></td>
+<td></td>
+<td></td>
+<td>传递；链（<code>hasField ∘ references ∘ belongsToTable</code>）</td>
+<td>若字段引用另一表字段，则建立表级依赖（可传递）</td>
+</tr>
+<tr>
+<td><code>odlm:fieldFollowStandard</code></td>
+<td>字段遵循某一标准</td>
+<td><code>odlm:Field</code></td>
+<td><code>odlm:fieldStandard</code></td>
+<td><code>odlm:followStandard</code></td>
+<td></td>
+<td></td>
+<td>字段遵循的字段标准</td>
+</tr>
+<tr>
+<td><code>odlm:fieldStandardHasRule</code></td>
+<td>字段标准规则</td>
+<td><code>odlm:fieldStandard</code></td>
+<td><code>odlm:Rule</code></td>
+<td><code>odlm:hasRule</code></td>
+<td></td>
+<td></td>
+<td>依据字段标准生成的规则集合</td>
+</tr>
+<tr>
+<td><code>odlm:securityCategory</code></td>
+<td>安全分类</td>
+<td><code>odlm:Field</code></td>
+<td><code>odlm:SecurityCategory</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>字段所属的安全分类</td>
+</tr>
+<tr>
+<td><code>odlm:securityLevel</code></td>
+<td>安全分级</td>
+<td><code>odlm:Field</code></td>
+<td><code>odlm:SecurityLevel</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>字段所属的安全分级</td>
+</tr>
+<tr>
+<td><code>odlm:partitionKey</code></td>
+<td>分区键</td>
+<td><code>odlm:HiveField</code></td>
+<td><code>odlm:PartitionKey</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Hive 字段的分区键标注</td>
+</tr>
+<tr>
+<td><code>odlm:taskPurpose</code></td>
+<td>任务用途</td>
+<td><code>odlm:Task</code></td>
+<td><code>odlm:TaskPurpose</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>任务的用途（ETL/加工/稽核等）</td>
+</tr>
+<tr>
+<td><code>odlm:executionMode</code></td>
+<td>实时/离线</td>
+<td><code>odlm:Task</code></td>
+<td><code>odlm:ExecutionMode</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>任务的执行模式（实时/离线）</td>
+</tr>
+<tr>
+<td><code>odlm:devMode</code></td>
+<td>开发模式</td>
+<td><code>odlm:Task</code></td>
+<td><code>odlm:DevMode</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>任务开发模式（离线采集/实时采集/FLinkSQL 等）</td>
+</tr>
+<tr>
+<td><code>odlm:taskCycle</code></td>
+<td>任务周期</td>
+<td><code>odlm:Task</code></td>
+<td><code>odlm:ScheduleCycle</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>调度周期（小时/日/周/月…）</td>
+</tr>
+<tr>
+<td><code>odlm:taskBelongsToWorkspace</code></td>
+<td>任务所属空间</td>
+<td><code>odlm:Task</code></td>
+<td><code>odlm:Workspace</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>任务所在的工作空间</td>
+</tr>
+<tr>
+<td><code>odlm:lastUpdateBy</code></td>
+<td>最近更新人</td>
+<td><code>odlm:Dimension</code>/<code>odlm:BusinessQualifier</code></td>
+<td><code>odlm:User</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>维度/业务限定的最近更新人</td>
+</tr>
+<tr>
+<td><code>odlm:dimensionTable</code></td>
+<td>维度表</td>
+<td><code>odlm:Dimension</code></td>
+<td><code>odlm:Table</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>该维度所指向的维度表</td>
+</tr>
+<tr>
+<td><code>odlm:hasAttribute</code></td>
+<td>包含维度属性</td>
+<td><code>odlm:Dimension</code></td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td></td>
+<td><code>odlm:belongsToDimension</code></td>
+<td></td>
+<td>维度包含的属性集合</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToDimension</code></td>
+<td>维度归属</td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td><code>odlm:Dimension</code></td>
+<td></td>
+<td><code>odlm:hasAttribute</code></td>
+<td>逆属性</td>
+<td>属性所属的维度</td>
+</tr>
+<tr>
+<td><code>odlm:dimensionField</code></td>
+<td>维度字段</td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td><code>odlm:Field</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>维度属性绑定的字段</td>
+</tr>
+<tr>
+<td><code>odlm:relatedTable</code></td>
+<td>关联模型（表）</td>
+<td><code>odlm:BusinessQualifier</code></td>
+<td><code>odlm:Table</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>限定条件涉及到的表</td>
+</tr>
+<tr>
+<td><code>odlm:relatedField</code></td>
+<td>关联字段</td>
+<td><code>odlm:BusinessQualifier</code></td>
+<td><code>odlm:Field</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>限定条件涉及到的字段</td>
+</tr>
+<tr>
+<td><code>odlm:belongsToCatalog</code></td>
+<td>所属目录</td>
+<td><code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>odlm:MetricCatalog</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指标所属的目录</td>
+</tr>
+<tr>
+<td><code>odlm:createdBy</code></td>
+<td>创建人</td>
+<td><code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>odlm:User</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指标的创建人</td>
+</tr>
+<tr>
+<td><code>odlm:unit</code></td>
+<td>度量单位</td>
+<td><code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>odlm:Unit</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指标使用的计量单位</td>
+</tr>
+<tr>
+<td><code>odlm:sourceTable</code></td>
+<td>关联模型（表）</td>
+<td><code>odlm:AtomicMetric</code></td>
+<td><code>odlm:Table</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>原子指标依赖的数据表</td>
+</tr>
+<tr>
+<td><code>odlm:measureField</code></td>
+<td>计量字段</td>
+<td><code>odlm:AtomicMetric</code></td>
+<td><code>odlm:Field</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>原子指标的度量字段</td>
+</tr>
+<tr>
+<td><code>odlm:measureMethod</code></td>
+<td>计量方式</td>
+<td><code>odlm:AtomicMetric</code></td>
+<td><code>odlm:MeasureMethod</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>原子指标的统计方式（求和/计数等）</td>
+</tr>
+<tr>
+<td><code>odlm:dateDimension</code></td>
+<td>日期维度</td>
+<td><code>odlm:AtomicMetric</code></td>
+<td><code>odlm:Dimension</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指标关联的时间/日期维度</td>
+</tr>
+<tr>
+<td><code>odlm:storageType</code></td>
+<td>存储类型</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>odlm:StorageType</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>派生指标的落地/存储类型</td>
+</tr>
+<tr>
+<td><code>odlm:derivedDimension</code></td>
+<td>派生维度</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>odlm:Dimension</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>派生指标的分析维度</td>
+</tr>
+<tr>
+<td><code>odlm:timeDimension</code></td>
+<td>时间维度</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>odlm:Dimension</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>派生指标的时间维度</td>
+</tr>
+<tr>
+<td><code>odlm:statPeriod</code></td>
+<td>统计周期</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>odlm:StatPeriod</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>派生指标的统计周期</td>
+</tr>
+<tr>
+<td><code>odlm:appliedQualifier</code></td>
+<td>业务限定</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>odlm:BusinessQualifier</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>指标应用的业务限定</td>
+</tr>
+<tr>
+<td><code>odlm:serviceAuthTeam</code></td>
+<td>团队可访问服务</td>
+<td><code>odlm:Service</code></td>
+<td><code>odlm:Team</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>可访问该服务的团队</td>
+</tr>
+<tr>
+<td><code>odlm:hasRequestMethod</code></td>
+<td>请求方法</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:RequestMethod</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>API 的 HTTP 方法（GET/POST/…）</td>
+</tr>
+<tr>
+<td><code>odlm:hasCallType</code></td>
+<td>调用类型</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:CallType</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>同步/异步</td>
+</tr>
+<tr>
+<td><code>odlm:hasStatus</code></td>
+<td>状态</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:ServiceStatus</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>开发/发布/失效</td>
+</tr>
+<tr>
+<td><code>odlm:hasAccessLevel</code></td>
+<td>开放等级</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:AccessLevel</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>快捷开放/严控开放</td>
+</tr>
+<tr>
+<td><code>odlm:hasOwner</code></td>
+<td>负责人</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:User</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>服务负责人</td>
+</tr>
+<tr>
+<td><code>odlm:contentType</code></td>
+<td>Content-Type</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:ContentType</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>返回的内容类型（JSON/CSV/XML）</td>
+</tr>
+<tr>
+<td><code>odlm:runsOn</code></td>
+<td>运行态集群</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:Cluster</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>服务运行所在集群</td>
+</tr>
+<tr>
+<td><code>odlm:hasSubscriber</code></td>
+<td>订阅人</td>
+<td><code>odlm:APIService</code></td>
+<td><code>odlm:User</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>订阅该服务的用户</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E6%95%B0%E6%8D%AE%E5%B1%9E%E6%80%A7datatype-properties">数据属性（Datatype Properties）</h2>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>标签</th>
+<th>Domain</th>
+<th>Range</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odlm:alias</code></td>
+<td>别名</td>
+<td>全局</td>
+<td><code>xsd:string</code></td>
+<td>通用别名属性，适用于所有实体、属性和活动</td>
+</tr>
+<tr>
+<td><code>odlm:description</code></td>
+<td>描述</td>
+<td>全局</td>
+<td><code>xsd:string</code></td>
+<td>通用描述属性，适用于所有实体、属性和活动</td>
+</tr>
+<tr>
+<td><code>odlm:dataSourceId</code></td>
+<td>ID</td>
+<td><code>odlm:DataSource</code></td>
+<td><code>xsd:string</code></td>
+<td>唯一标识，一般对应系统中资源的英文名</td>
+</tr>
+<tr>
+<td><code>odlm:version</code></td>
+<td>版本</td>
+<td><code>odlm:DataSource</code></td>
+<td><code>xsd:string</code></td>
+<td>数据源版本标识</td>
+</tr>
+<tr>
+<td><code>odlm:enableKerberos</code></td>
+<td>开启 Kerberos 认证</td>
+<td><code>odlm:KerberosSupport</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否启用 Kerberos</td>
+</tr>
+<tr>
+<td><code>odlm:kerberosPrincipal</code></td>
+<td>Kerberos Principal</td>
+<td><code>odlm:KerberosSupport</code></td>
+<td><code>xsd:string</code></td>
+<td>Kerberos 主体</td>
+</tr>
+<tr>
+<td><code>odlm:keytabFile</code></td>
+<td>keytab 文件</td>
+<td><code>odlm:KerberosSupport</code></td>
+<td><code>xsd:string</code></td>
+<td>keytab 文件路径</td>
+</tr>
+<tr>
+<td><code>odlm:krb5File</code></td>
+<td>krb5 文件</td>
+<td><code>odlm:KerberosSupport</code></td>
+<td><code>xsd:string</code></td>
+<td>krb5 配置文件路径</td>
+</tr>
+<tr>
+<td><code>odlm:jdbcUrl</code></td>
+<td>JDBC 连接/访问地址</td>
+<td><code>odlm:MySQL</code>/<code>odlm:Hive</code></td>
+<td><code>xsd:string</code></td>
+<td>数据源的 JDBC 地址（MySQL/Hive）</td>
+</tr>
+<tr>
+<td><code>odlm:userName</code></td>
+<td>用户名</td>
+<td><code>odlm:MySQL</code>/<code>odlm:Kafka</code>/<code>odlm:MinIO</code></td>
+<td><code>xsd:string</code></td>
+<td>访问数据源的用户名</td>
+</tr>
+<tr>
+<td><code>odlm:password</code></td>
+<td>密码</td>
+<td><code>odlm:MySQL</code>/<code>odlm:Kafka</code>/<code>odlm:MinIO</code></td>
+<td><code>xsd:string</code></td>
+<td>访问数据源的密码</td>
+</tr>
+<tr>
+<td><code>odlm:queueName</code></td>
+<td>队列名</td>
+<td><code>odlm:Hive</code></td>
+<td><code>xsd:string</code></td>
+<td>作业执行队列</td>
+</tr>
+<tr>
+<td><code>odlm:metaDatabase</code></td>
+<td>元数据库</td>
+<td><code>odlm:Hive</code></td>
+<td><code>xsd:string</code></td>
+<td>Hive 元存储库标识</td>
+</tr>
+<tr>
+<td><code>odlm:storagePath</code></td>
+<td>存储路径</td>
+<td><code>odlm:Hive</code></td>
+<td><code>xsd:string</code></td>
+<td>存储位置/路径</td>
+</tr>
+<tr>
+<td><code>odlm:configDir</code></td>
+<td>配置文件目录</td>
+<td><code>odlm:Hive</code></td>
+<td><code>xsd:string</code></td>
+<td>配置文件目录</td>
+</tr>
+<tr>
+<td><code>odlm:hbaseZookeeperQuorum</code></td>
+<td>hbase.zookeeper.quorum</td>
+<td><code>odlm:HBase</code></td>
+<td><code>xsd:string</code></td>
+<td>HBase ZK 集群地址</td>
+</tr>
+<tr>
+<td><code>odlm:hbaseZookeeperClientPort</code></td>
+<td>hbase.zookeeper.property.clientPort</td>
+<td><code>odlm:HBase</code></td>
+<td><code>xsd:string</code></td>
+<td>HBase ZK 客户端端口</td>
+</tr>
+<tr>
+<td><code>odlm:zookeeperZnodeParent</code></td>
+<td>ZooKeeper Znode Parent</td>
+<td><code>odlm:HBase</code></td>
+<td><code>xsd:string</code></td>
+<td>ZK 根 Znode</td>
+</tr>
+<tr>
+<td><code>odlm:namespace</code></td>
+<td>namespace</td>
+<td><code>odlm:HBase</code></td>
+<td><code>xsd:string</code></td>
+<td>HBase 命名空间</td>
+</tr>
+<tr>
+<td><code>odlm:hbaseConf</code></td>
+<td>HBase 配置</td>
+<td><code>odlm:HBase</code></td>
+<td><code>xsd:string</code></td>
+<td>HBase 配置（序列化）</td>
+</tr>
+<tr>
+<td><code>odlm:bootstrapServers</code></td>
+<td>连接地址</td>
+<td><code>odlm:Kafka</code></td>
+<td><code>xsd:string</code></td>
+<td>Kafka bootstrap servers</td>
+</tr>
+<tr>
+<td><code>odlm:kafkaConf</code></td>
+<td>Kafka 配置</td>
+<td><code>odlm:Kafka</code></td>
+<td><code>xsd:string</code></td>
+<td>Kafka 配置（序列化）</td>
+</tr>
+<tr>
+<td><code>odlm:url</code></td>
+<td>协议地址</td>
+<td><code>odlm:MinIO</code></td>
+<td><code>xsd:string</code></td>
+<td>MinIO 访问地址</td>
+</tr>
+<tr>
+<td><code>odlm:tableId</code></td>
+<td>ID</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>表的业务主键</td>
+</tr>
+<tr>
+<td><code>odlm:ownerContact</code></td>
+<td>负责人联系方式</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>负责人联系信息</td>
+</tr>
+<tr>
+<td><code>odlm:processingRule</code></td>
+<td>加工口径</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>表的加工规则说明</td>
+</tr>
+<tr>
+<td><code>odlm:functionDesc</code></td>
+<td>功能描述</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>表的功能描述</td>
+</tr>
+<tr>
+<td><code>odlm:scenario</code></td>
+<td>应用场景</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>使用/应用场景</td>
+</tr>
+<tr>
+<td><code>odlm:importance</code></td>
+<td>重要等级</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>重要性等级</td>
+</tr>
+<tr>
+<td><code>odlm:updateMethod</code></td>
+<td>更新方式</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>更新方式说明</td>
+</tr>
+<tr>
+<td><code>odlm:updateTime</code></td>
+<td>更新时间</td>
+<td><code>odlm:Table</code>/<code>odlm:Task</code>/<code>odlm:Dimension</code>/<code>odlm:BusinessQualifier</code></td>
+<td><code>xsd:dateTime</code></td>
+<td>最后更新时间</td>
+</tr>
+<tr>
+<td><code>odlm:isMaterialized</code></td>
+<td>是否物化</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否为物化表</td>
+</tr>
+<tr>
+<td><code>odlm:attrComplete</code></td>
+<td>属性是否完整</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:boolean</code></td>
+<td>属性完整性标识</td>
+</tr>
+<tr>
+<td><code>odlm:rowCount</code></td>
+<td>数据条数</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>数据行数（文本记录）</td>
+</tr>
+<tr>
+<td><code>odlm:totalSize</code></td>
+<td>总存储量</td>
+<td><code>odlm:Table</code></td>
+<td><code>xsd:string</code></td>
+<td>总占用空间（文本记录）</td>
+</tr>
+<tr>
+<td><code>odlm:hiveTableId</code></td>
+<td>Hive表ID</td>
+<td><code>odlm:HiveTable</code></td>
+<td><code>xsd:string</code></td>
+<td>Hive 表标识</td>
+</tr>
+<tr>
+<td><code>odlm:isPartitioned</code></td>
+<td>是否分区</td>
+<td><code>odlm:HiveTable</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否为分区表</td>
+</tr>
+<tr>
+<td><code>odlm:isExternal</code></td>
+<td>是否外部表</td>
+<td><code>odlm:HiveTable</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否为外部表</td>
+</tr>
+<tr>
+<td><code>odlm:externalLocation</code></td>
+<td>外部表地址</td>
+<td><code>odlm:HiveTable</code></td>
+<td><code>xsd:string</code></td>
+<td>外部表数据存放地址（当 <code>isExternal=true</code> 必填）</td>
+</tr>
+<tr>
+<td><code>odlm:hdfsPath</code></td>
+<td>文件存储路径</td>
+<td><code>odlm:HiveTable</code></td>
+<td><code>xsd:string</code></td>
+<td>HDFS 文件路径</td>
+</tr>
+<tr>
+<td><code>odlm:fieldId</code></td>
+<td>ID</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:string</code></td>
+<td>字段的业务主键</td>
+</tr>
+<tr>
+<td><code>odlm:businessMeaning</code></td>
+<td>业务含义</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:string</code></td>
+<td>字段的业务意义</td>
+</tr>
+<tr>
+<td><code>odlm:length</code></td>
+<td>长度</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:string</code></td>
+<td>字段长度</td>
+</tr>
+<tr>
+<td><code>odlm:precision</code></td>
+<td>精度</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:string</code></td>
+<td>数值精度</td>
+</tr>
+<tr>
+<td><code>odlm:isPrimaryKey</code></td>
+<td>是否主键</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否为主键</td>
+</tr>
+<tr>
+<td><code>odlm:isNullable</code></td>
+<td>是否为空</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否允许为空</td>
+</tr>
+<tr>
+<td><code>odlm:defaultValue</code></td>
+<td>默认值</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:string</code></td>
+<td>字段默认值</td>
+</tr>
+<tr>
+<td><code>odlm:isDimension</code></td>
+<td>是否维度</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否作为维度使用</td>
+</tr>
+<tr>
+<td><code>odlm:isMeasure</code></td>
+<td>是否度量</td>
+<td><code>odlm:Field</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否作为度量使用</td>
+</tr>
+<tr>
+<td><code>odlm:hiveFieldId</code></td>
+<td>Hive字段ID</td>
+<td><code>odlm:HiveField</code></td>
+<td><code>xsd:string</code></td>
+<td>Hive 字段标识</td>
+</tr>
+<tr>
+<td><code>odlm:isTimeIdentifier</code></td>
+<td>时间标识</td>
+<td><code>odlm:HiveField</code></td>
+<td><code>xsd:boolean</code></td>
+<td>是否为时间标识字段</td>
+</tr>
+<tr>
+<td><code>odlm:taskId</code></td>
+<td>任务ID</td>
+<td><code>odlm:Task</code></td>
+<td><code>xsd:string</code></td>
+<td>任务业务标识</td>
+</tr>
+<tr>
+<td><code>odlm:isIncremental</code></td>
+<td>采集模式</td>
+<td><code>odlm:Task</code></td>
+<td><code>xsd:boolean</code></td>
+<td>true=增量 / false=全量</td>
+</tr>
+<tr>
+<td><code>odlm:dimensionId</code></td>
+<td>维度ID</td>
+<td><code>odlm:Dimension</code></td>
+<td><code>xsd:string</code></td>
+<td>维度业务标识</td>
+</tr>
+<tr>
+<td><code>odlm:attributeCount</code></td>
+<td>属性数</td>
+<td><code>odlm:Dimension</code></td>
+<td><code>xsd:integer</code></td>
+<td>维度包含的属性数量</td>
+</tr>
+<tr>
+<td><code>odlm:attrId</code></td>
+<td>维度属性标识</td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td><code>xsd:string</code></td>
+<td>维度属性业务标识</td>
+</tr>
+<tr>
+<td><code>odlm:attrName</code></td>
+<td>维度属性名称</td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td><code>xsd:string</code></td>
+<td>维度属性名称</td>
+</tr>
+<tr>
+<td><code>odlm:attrDesc</code></td>
+<td>维度属性描述</td>
+<td><code>odlm:DimensionAttribute</code></td>
+<td><code>xsd:string</code></td>
+<td>维度属性说明</td>
+</tr>
+<tr>
+<td><code>odlm:businessQualifierId</code></td>
+<td>业务限定ID</td>
+<td><code>odlm:BusinessQualifier</code></td>
+<td><code>xsd:string</code></td>
+<td>业务限定标识</td>
+</tr>
+<tr>
+<td><code>odlm:calculationLogic</code></td>
+<td>计算逻辑</td>
+<td><code>odlm:BusinessQualifier</code></td>
+<td><code>xsd:string</code></td>
+<td>SQL 计算逻辑片段</td>
+</tr>
+<tr>
+<td><code>odlm:atomicMetricId</code></td>
+<td>原子指标ID</td>
+<td><code>odlm:AtomicMetric</code></td>
+<td><code>xsd:string</code></td>
+<td>原子指标标识</td>
+</tr>
+<tr>
+<td><code>odlm:createdTime</code></td>
+<td>创建时间</td>
+<td><code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>xsd:dateTime</code></td>
+<td>指标创建时间</td>
+</tr>
+<tr>
+<td><code>odlm:businessFormula</code></td>
+<td>业务口径</td>
+<td><code>odlm:AtomicMetric</code>/<code>odlm:DerivedMetric</code></td>
+<td><code>xsd:string</code></td>
+<td>指标业务口径说明</td>
+</tr>
+<tr>
+<td><code>odlm:derivedMetricId</code></td>
+<td>派生指标ID</td>
+<td><code>odlm:DerivedMetric</code></td>
+<td><code>xsd:string</code></td>
+<td>派生指标标识</td>
+</tr>
+<tr>
+<td><code>odlm:apiServiceId</code></td>
+<td>API服务ID</td>
+<td><code>odlm:APIService</code></td>
+<td><code>xsd:string</code></td>
+<td>API 服务标识</td>
+</tr>
+<tr>
+<td><code>odlm:apiEndpoint</code></td>
+<td>访问地址</td>
+<td><code>odlm:APIService</code></td>
+<td><code>xsd:string</code></td>
+<td>访问地址（<code>dcat:endpointURL</code> 的子属性）</td>
+</tr>
+<tr>
+<td><code>odlm:createdAt</code></td>
+<td>创建时间</td>
+<td><code>odlm:APIService</code></td>
+<td><code>xsd:dateTime</code></td>
+<td>服务创建时间</td>
+</tr>
+<tr>
+<td><code>odlm:businessDescription</code></td>
+<td>业务详述</td>
+<td><code>odlm:APIService</code></td>
+<td><code>xsd:string</code></td>
+<td>服务的业务说明</td>
+</tr>
+<tr>
+<td><code>odlm:sqlQuery</code></td>
+<td>SQL 语句</td>
+<td><code>odlm:APIService</code></td>
+<td><code>xsd:string</code></td>
+<td>具体查询 SQL（可含模板变量）</td>
+</tr>
+<tr>
+<td><code>odlm:objectDisplayName</code></td>
+<td>对象的展示属性</td>
+<td><code>odlm:Object</code></td>
+<td><code>xsd:string</code></td>
+<td>对象的展示名称</td>
+</tr>
+<tr>
+<td><code>odlm:objectId</code></td>
+<td>对象唯一标识</td>
+<td><code>odlm:Object</code></td>
+<td><code>xsd:string</code></td>
+<td>对象唯一标识</td>
+</tr>
+<tr>
+<td><code>odlm:useCase</code></td>
+<td>对象使用场景</td>
+<td><code>odlm:Object</code></td>
+<td><code>xsd:string</code></td>
+<td>对象应用/使用场景</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%E5%91%BD%E5%90%8D%E4%B8%AA%E4%BD%93%E4%B8%8E%E6%9E%9A%E4%B8%BEnamed-individuals--enums">命名个体与枚举（Named Individuals &amp; Enums）</h2>
+<p>以下是 ODLM 命名空间下的枚举值示例（非穷尽）。</p>
+<h3 id="%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95odlmrequestmethod">请求方法（<code>odlm:RequestMethod</code>）</h3>
+<ul>
+<li><code>odlm:GET</code>  — GET</li>
+<li><code>odlm:POST</code> — POST</li>
+<li><code>odlm:PUT</code>  — PUT</li>
+<li><code>odlm:DELETE</code> — DELETE</li>
+<li><code>odlm:PATCH</code> — PATCH</li>
+</ul>
+<h3 id="%E8%B0%83%E7%94%A8%E7%B1%BB%E5%9E%8Bodlmcalltype">调用类型（<code>odlm:CallType</code>）</h3>
+<ul>
+<li><code>odlm:Synchronous</code> — 同步</li>
+<li><code>odlm:Asynchronous</code> — 异步</li>
+</ul>
+<h3 id="%E6%9C%8D%E5%8A%A1%E7%8A%B6%E6%80%81odlmservicestatus">服务状态（<code>odlm:ServiceStatus</code>）</h3>
+<ul>
+<li><code>odlm:Developing</code> — 开发</li>
+<li><code>odlm:Published</code> — 发布</li>
+<li><code>odlm:Deprecated</code> — 失效</li>
+</ul>
+<h3 id="%E5%BC%80%E6%94%BE%E7%AD%89%E7%BA%A7odlmaccesslevel">开放等级（<code>odlm:AccessLevel</code>）</h3>
+<ul>
+<li><code>odlm:QuickAccess</code> — 快捷开放</li>
+<li><code>odlm:StrictControl</code> — 严控开放</li>
+</ul>
+<h3 id="content-typeodlmcontenttype">Content-Type（<code>odlm:ContentType</code>）</h3>
+<ul>
+<li><code>odlm:JSON</code> — application/json</li>
+<li><code>odlm:CSV</code> — text/csv</li>
+<li><code>odlm:XML</code> — application/xml</li>
+</ul>
+<blockquote>
+<p>其他业务侧字典（如 <code>UpdateCycle</code>、<code>DataLayer</code>、<code>MeasureMethod</code>、<code>Unit</code> 等）在业务实例命名空间 <code>ex:</code> 中给出样例实例，可按需扩展至 <code>odlm:</code> 空间或复用 <code>ex:</code>。</p>
+</blockquote>
+<hr>
+<h2 id="%E5%BB%BA%E6%A8%A1%E7%BA%A6%E6%9D%9F%E4%B8%8E%E6%8E%A8%E7%90%86%E8%A7%84%E5%88%99axioms">建模约束与推理规则（Axioms）</h2>
+<ul>
+<li><strong>血缘：字段引用与表依赖</strong>
+<ul>
+<li><code>odlm:references</code> 为传递属性：A 引用 B、B 引用 C，则 A 引用 C。</li>
+<li><code>odlm:dependsOn</code> 为传递属性，并由链 <code>odlm:hasField ∘ odlm:references ∘ odlm:belongsToTable</code> 推断：若表 A 的字段引用表 B 的字段，则 A dependsOn B。</li>
+</ul>
+</li>
+<li><strong>模型关联（Schema）</strong>
+<ul>
+<li><code>odlm:relatedSchema</code> 通过链 <code>containsTable ∘ dependsOn ∘ belongsToSchema</code> 推断，并为对称属性。</li>
+</ul>
+</li>
+<li><strong>团队/空间与集群归属推理</strong>
+<ul>
+<li><code>odlm:belongsToCluster</code> 支持链：<code>odlm:belongsToDataSource ∘ odlm:belongsToCluster</code>（表继承数据源的集群归属）。</li>
+</ul>
+</li>
+<li><strong>权限继承</strong>
+<ul>
+<li><code>odlm:hasDirectPermission</code> 为 <code>odlm:hasRole ∘ odlm:hasPermission</code> 的链式子属性，支持用户通过角色继承权限。</li>
+</ul>
+</li>
+<li><strong>PROV-O 对齐</strong>
+<ul>
+<li>生产/来源关系复用 <code>prov:generated</code>、<code>prov:wasGeneratedBy</code>、<code>prov:used</code>；Activity/Entity 对齐 PROV 语义。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="%E9%99%84%E5%BD%95%E7%A4%BA%E4%BE%8B%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8Eex">附录：示例实例说明（ex:）</h2>
+<ul>
+<li>文件中提供了 <code>ex:</code> 命名空间的完整示例，覆盖：
+<ul>
+<li>源端 <code>MySQL</code> 数据源与表（客户、订单）；</li>
+<li>目标端 <code>Hive</code> 仓库与汇总表；</li>
+<li>ETL 任务血缘（<code>odlm:used</code> / <code>odlm:generated</code>）与表到表血缘（<code>prov:wasDerivedFrom</code> / <code>odlm:dependsOn</code>）；</li>
+<li>维度表与维度、维度属性；</li>
+<li>基于汇总表的原子指标与派生指标（含目录、单位、时间维度、统计周期等）；</li>
+<li><code>APIService</code> 示例，展示接口元数据、调用类型、状态、开放等级、内容类型、SQL 模板与使用的表/指标。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>这些示例用于演示词汇在典型数据中台场景下的建模与血缘表达方式，业务部署时可替换为真实实例。</p>
+</blockquote>
+<hr>
+<h2 id="%E4%BF%AE%E8%AE%A2%E8%AE%B0%E5%BD%95">修订记录</h2>
+<ul>
+<li>1.0（2025-08-30）: 初始版本发布。</li>
+</ul>
+
+</body>
+</html>
