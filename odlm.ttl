@@ -10,8 +10,8 @@
 
 # Ontology Declaration
 <http://asiainfo.com/odlm> a owl:Ontology ;
-    rdfs:label "亚信数据生命周期管理本体" ;
-    dcterms:description "定义数据生命周期管理相关的类和属性" ;
+    rdfs:label "亚信数据治理本体" ;
+    dcterms:description "定义数据治理相关的类和属性" ;
     dcterms:created "2025-08-23"^^<http://www.w3.org/2001/XMLSchema#date> ;
     owl:versionInfo "1.0" .
 
